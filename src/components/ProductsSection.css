@@ -4,8 +4,8 @@
 
 .products-row {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .product-card {
@@ -16,7 +16,7 @@
   border-radius: 18px;
   background: #fff;
   border: 1px solid #ececec;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   overflow: hidden;
 }
 
@@ -61,7 +61,7 @@
 
 .product-body h3 {
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -103,7 +103,7 @@
 }
 
 .current-price {
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: -0.04em;
 }
 
@@ -166,10 +166,22 @@
 
 @media (max-width: 520px) {
   .products-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 4px;
+  }
+
+  .product-card {
+    min-width: 165px;
+    scroll-snap-align: start;
   }
 
   .products-shell {
     padding-top: 18px;
+  }
+
+  .current-price {
+    font-size: 17px;
   }
 }

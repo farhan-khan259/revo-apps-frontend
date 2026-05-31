@@ -3,15 +3,15 @@ import { CartIcon, HomeIcon, ReelIcon, ShopIcon, UserIcon } from './Icons';
 
 const tabItems = [
   { key: 'home', label: 'Home', target: 'categories', Icon: HomeIcon },
-  { key: 'reels', label: 'Reels', target: 'best-deals', Icon: ReelIcon },
-  { key: 'shop', label: 'Shop', target: 'new-arrivals', Icon: ShopIcon },
+  { key: 'reels', label: 'Deals', target: 'best-deals', Icon: ReelIcon },
+  { key: 'shop', label: 'Shop', target: 'new-products', Icon: ShopIcon },
   { key: 'cart', label: 'Cart', target: 'best-deals', Icon: CartIcon, badge: '2' },
   { key: 'account', label: 'Account', target: 'account', Icon: UserIcon },
 ];
 
 function MobileBottomNav({ activeSection, onNavigate }) {
   const activeKey =
-    activeSection === 'new-arrivals'
+    activeSection === 'new-products'
         ? 'shop'
         : activeSection === 'best-deals'
           ? 'cart'

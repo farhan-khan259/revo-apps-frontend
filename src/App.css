@@ -1,6 +1,6 @@
 .app-shell {
   min-height: 100vh;
-  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 34%, #ffffff 100%);
+  background: #ffffff;
   color: #1e1e1f;
 }
 
@@ -31,9 +31,9 @@ main {
 
 .section-title {
   margin: 0;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(22px, 2vw, 32px);
-  font-weight: 700;
+  font-family: 'Space Grotesk', 'Manrope', sans-serif;
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 800;
   letter-spacing: -0.04em;
 }
 
@@ -67,6 +67,7 @@ main {
   padding: 10px 14px;
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .chip.is-active {
@@ -94,6 +95,7 @@ main {
     overflow-x: auto;
     padding-bottom: 4px;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   .chip-row::-webkit-scrollbar {
@@ -104,5 +106,9 @@ main {
 @media (max-width: 520px) {
   .section-shell {
     width: min(1180px, calc(100% - 14px));
+  }
+
+  .section-subtitle {
+    font-size: 13px;
   }
 }

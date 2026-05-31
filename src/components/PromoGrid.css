@@ -2,6 +2,10 @@
   padding: 18px 0 8px;
 }
 
+.promo-header {
+  margin-bottom: 14px;
+}
+
 .promo-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -10,7 +14,7 @@
 
 .promo-card {
   position: relative;
-  min-height: 208px;
+  min-height: 212px;
   border-radius: 22px;
   overflow: hidden;
   background: #f4f4f4;

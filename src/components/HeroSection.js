@@ -32,10 +32,10 @@ function HeroSection({ stats, slides, onNavigate }) {
           <h1>{currentSlide?.title}</h1>
           <p>{currentSlide?.description}</p>
           <div className="hero-actions">
-            <a className="hero-primary" href="#new-arrivals" onClick={() => onNavigate('new-arrivals')}>
+            <a className="hero-primary" href="#new-products" onClick={() => onNavigate('new-products')}>
               Shop now
             </a>
-            <a className="hero-secondary" href="#categories">
+            <a className="hero-secondary" href="#categories" onClick={() => onNavigate('categories')}>
               Browse categories
             </a>
           </div>
@@ -54,10 +54,14 @@ function HeroSection({ stats, slides, onNavigate }) {
             <div className="hero-track" style={{ transform: `translateX(-${activeSlide * 100}%)` }}>
               {slides.map((slide) => (
                 <div className="hero-slide" key={slide.title}>
-                  <div className="hero-orb hero-orb-left" />
-                  <div className="hero-orb hero-orb-right" />
-                  <img src={slide.mainImage} alt="" className="hero-phone hero-phone-main" />
-                  <img src={slide.secondaryImage} alt="" className="hero-phone hero-phone-second" />
+                  <div className="hero-shape hero-shape-left" />
+                  <div className="hero-shape hero-shape-right" />
+                  <div className="hero-image-wrap hero-image-main">
+                    <img src={slide.mainImage} alt="" />
+                  </div>
+                  <div className="hero-image-wrap hero-image-secondary">
+                    <img src={slide.secondaryImage} alt="" />
+                  </div>
                   <div className="hero-badge hero-badge-top">{slide.badgeTop}</div>
                   <div className="hero-badge hero-badge-bottom">{slide.badgeBottom}</div>
                 </div>

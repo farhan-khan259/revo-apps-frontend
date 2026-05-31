@@ -5,7 +5,7 @@ function Categories({ items, onNavigate }) {
     <section className="categories-shell section-shell" id="categories">
       <div className="categories-row" aria-label="Mobile categories">
         {items.map((item) => (
-          <a className="category-card" key={item.name} href="#new-arrivals" onClick={() => onNavigate('new-arrivals')}>
+          <a className="category-card" key={item.name} href="#new-products" onClick={() => onNavigate('new-products')}>
             <div className="category-thumb">
               <img src={item.image} alt={item.name} />
             </div>

@@ -1,36 +1,37 @@
 .hero-shell {
-  padding: 18px 0 10px;
+  padding: 16px 0 12px;
 }
 
 .hero-card {
   position: relative;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 24px;
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
   overflow: hidden;
   border-radius: 28px;
-  background:
-    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.9), transparent 28%),
-    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.8), transparent 22%),
-    linear-gradient(135deg, #f3f5f7 0%, #ffffff 58%, #f8f8f8 100%);
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.06);
-  padding: 34px;
+  background: #fafafa;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.08);
 }
 
 .hero-copy {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 32px 34px;
+  color: #fff;
+  background: linear-gradient(135deg, #111111 0%, #181818 52%, #222 100%);
 }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
   height: 30px;
   padding: 0 14px;
   border-radius: 999px;
-  background: #ffd16d;
-  color: #4d2c00;
+  background: #ef1f1f;
+  color: #fff;
   font-size: 13px;
   font-weight: 800;
   text-transform: uppercase;
@@ -38,19 +39,19 @@
 }
 
 .hero-copy h1 {
-  margin: 18px 0 14px;
+  margin: 18px 0 12px;
   max-width: 10ch;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(42px, 6vw, 84px);
-  line-height: 0.94;
-  letter-spacing: -0.07em;
-  color: #111;
+  font-size: clamp(42px, 6vw, 74px);
+  line-height: 0.92;
+  letter-spacing: -0.08em;
+  color: #ffffff;
 }
 
 .hero-copy p {
   max-width: 58ch;
   margin: 0;
-  color: #5f5f5f;
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.7;
   font-size: 15px;
 }
@@ -76,13 +77,13 @@
 }
 
 .hero-primary {
-  background: #111;
+  background: #ef1f1f;
   color: #fff;
-  box-shadow: 0 12px 24px rgba(17, 17, 17, 0.18);
+  box-shadow: 0 12px 24px rgba(239, 31, 31, 0.24);
 }
 
 .hero-secondary {
-  border: 1px solid #d8d8d8;
+  border: 1px solid rgba(255, 255, 255, 0.26);
   color: #1c1c1c;
   background: #fff;
 }
@@ -97,31 +98,31 @@
 .hero-stat {
   padding: 14px 16px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .hero-stat strong {
   display: block;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 22px;
-  color: #111;
+  color: #fff;
 }
 
 .hero-stat span {
   display: block;
   margin-top: 3px;
-  color: #616161;
+  color: rgba(255, 255, 255, 0.72);
   font-size: 12px;
   line-height: 1.35;
 }
 
 .hero-visual {
   position: relative;
-  min-height: 430px;
-  border-radius: 24px;
+  min-height: 470px;
+  border-radius: 0 28px 28px 0;
   overflow: hidden;
+  background: linear-gradient(135deg, #efefef 0%, #ffffff 56%, #f6f6f6 100%);
 }
 
 .hero-carousel {
@@ -140,51 +141,60 @@
   position: relative;
   flex: 0 0 100%;
   min-height: 100%;
+  overflow: hidden;
 }
 
-.hero-phone {
+.hero-shape {
   position: absolute;
+  border-radius: 26px;
+}
+
+.hero-shape-left {
+  left: 44px;
+  top: 48px;
+  width: 220px;
+  height: 220px;
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.hero-shape-right {
+  right: 40px;
+  top: 72px;
+  width: 270px;
+  height: 270px;
+  background: #ef1f1f;
+}
+
+.hero-image-wrap {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.24));
+}
+
+.hero-image-wrap img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 22px;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
 }
 
-.hero-phone-main {
-  inset: auto 18px 18px auto;
-  width: min(390px, 80%);
-  height: 330px;
+.hero-image-main {
+  right: 22px;
+  top: 88px;
+  width: min(380px, 62%);
+  height: 250px;
+  transform: rotate(-10deg);
   z-index: 2;
 }
 
-.hero-phone-second {
-  left: 0;
-  top: 54px;
-  width: min(290px, 62%);
-  height: 290px;
-  transform: rotate(-8deg);
+.hero-image-secondary {
+  left: 24px;
+  top: 64px;
+  width: min(260px, 42%);
+  height: 230px;
+  transform: rotate(8deg);
   z-index: 1;
-}
-
-.hero-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(2px);
-}
-
-.hero-orb-left {
-  left: -24px;
-  bottom: -30px;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(239, 31, 31, 0.18) 0%, rgba(239, 31, 31, 0) 72%);
-}
-
-.hero-orb-right {
-  right: 12px;
-  top: 12px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(255, 208, 109, 0.6) 0%, rgba(255, 208, 109, 0) 70%);
 }
 
 .hero-badge {
@@ -192,7 +202,7 @@
   z-index: 3;
   padding: 10px 14px;
   border-radius: 999px;
-  background: rgba(17, 17, 17, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   color: #fff;
   font-weight: 700;
   font-size: 12px;
@@ -205,9 +215,9 @@
 }
 
 .hero-badge-bottom {
-  left: 34%;
-  bottom: 46px;
-  background: #636363;
+  left: 42%;
+  bottom: 54px;
+  background: #6a6a6a;
 }
 
 .hero-dots {
@@ -224,7 +234,7 @@
   height: 8px;
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.55);
   transition: transform 200ms ease, background 200ms ease, width 200ms ease;
 }
 
@@ -236,7 +246,6 @@
 @media (max-width: 960px) {
   .hero-card {
     grid-template-columns: 1fr;
-    padding: 22px;
     border-radius: 24px;
   }
 
@@ -250,31 +259,46 @@
 
   .hero-visual {
     order: -1;
-    min-height: 320px;
+    min-height: 300px;
+    border-radius: 24px 24px 0 0;
   }
 
-  .hero-phone-main {
-    width: 58%;
-    height: 240px;
+  .hero-copy {
+    padding: 24px;
+  }
+
+  .hero-shape-left {
+    left: 18px;
+    top: 22px;
+    width: 170px;
+    height: 170px;
+  }
+
+  .hero-shape-right {
+    right: 20px;
+    top: 30px;
+    width: 190px;
+    height: 190px;
+  }
+
+  .hero-image-main {
+    width: 60%;
+    height: 190px;
     right: 12px;
-    bottom: 10px;
+    top: 56px;
   }
 
-  .hero-phone-second {
-    width: 44%;
-    height: 205px;
-    left: 4px;
-    top: 34px;
+  .hero-image-secondary {
+    width: 42%;
+    height: 170px;
+    left: 10px;
+    top: 30px;
   }
 }
 
 @media (max-width: 640px) {
   .hero-shell {
     padding-top: 12px;
-  }
-
-  .hero-card {
-    padding: 18px;
   }
 
   .hero-copy h1 {
@@ -285,14 +309,28 @@
     min-height: 260px;
   }
 
-  .hero-phone-main {
-    width: 60%;
-    height: 190px;
+  .hero-copy p {
+    font-size: 14px;
   }
 
-  .hero-phone-second {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-primary,
+  .hero-secondary {
+    width: 100%;
+  }
+
+  .hero-image-main {
+    width: 67%;
+    height: 180px;
+  }
+
+  .hero-image-secondary {
     width: 46%;
-    height: 165px;
+    height: 150px;
   }
 
   .hero-badge-bottom {

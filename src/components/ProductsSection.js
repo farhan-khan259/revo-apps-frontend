@@ -12,7 +12,7 @@ function ProductCard({ product }) {
       </div>
       <div className="product-body">
         <h3>{product.name}</h3>
-        <p>You can write your product short description here to highlight the phone features.</p>
+        <p>{product.description || 'You can write your product short description here to highlight the phone features.'}</p>
         <div className="price-row">
           <span className="discount">{product.discount}</span>
           <span className="old-price">{product.oldPrice}</span>

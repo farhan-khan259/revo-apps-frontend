@@ -8,7 +8,7 @@ function AppDownload() {
           <div className="phone-frame">
             <div className="phone-camera" />
             <div className="phone-screen">
-              <span className="mini-pill">Mobile app preview</span>
+              <span className="mini-pill">Point and Rewards</span>
               <div className="screen-card screen-card-top" />
               <div className="screen-card screen-card-bottom" />
             </div>
@@ -16,11 +16,10 @@ function AppDownload() {
         </div>
 
         <div className="download-copy">
-          <span className="eyebrow-small">Download our app</span>
-          <h2>Shop phones faster on mobile</h2>
+          <span className="eyebrow-small">Download Our App</span>
+          <h2>Enjoy the best shopping experience on mobile</h2>
           <p>
-            Keep the layout aligned with the reference while making the page fully responsive. The app block is
-            included as a final storefront-style section.
+            Get the latest discount updates, push notifications, order tracking, and smoother checkout on your phone.
           </p>
           <div className="download-badges">
             <span className="badge">Google Play</span>

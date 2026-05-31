@@ -3,26 +3,27 @@ import { useEffect, useState } from 'react';
 import { BellIcon, CartIcon, HeartIcon, ListIcon, MenuIcon, SearchIcon } from './Icons';
 
 const navItems = [
-  { label: 'New Arrivals', target: 'new-arrivals' },
-  { label: 'Best Deals', target: 'best-deals' },
-  { label: 'Phones', target: 'new-arrivals' },
-  { label: 'Accessories', target: 'best-deals' },
+  { label: 'New Arrival', target: 'new-products' },
+  { label: 'Limited Offers', target: 'best-deals' },
+  { label: 'Shop', target: 'new-products' },
+  { label: 'Blogs', target: 'blog' },
 ];
 
 const categoryMenu = [
-  { label: 'Smartphones', target: 'new-arrivals' },
-  { label: 'Foldables', target: 'new-arrivals' },
-  { label: 'Cases & Covers', target: 'best-deals' },
-  { label: 'Chargers & Adapters', target: 'best-deals' },
+  { label: 'Smartphones', target: 'new-products' },
+  { label: 'Foldables', target: 'new-products' },
+  { label: 'Earbuds', target: 'new-products' },
+  { label: 'Chargers', target: 'best-deals' },
   { label: 'Power Banks', target: 'best-deals' },
-  { label: 'Earbuds', target: 'new-arrivals' },
-  { label: 'Smartwatches', target: 'best-deals' },
-  { label: 'Screen Protectors', target: 'best-deals' },
+  { label: 'Cases', target: 'best-deals' },
+  { label: 'Wearables', target: 'best-deals' },
+  { label: 'Accessories', target: 'best-deals' },
 ];
 
-function Navbar({ activeSection, onNavigate }) {
+function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const handleEscape = (event) => {
@@ -51,8 +52,18 @@ function Navbar({ activeSection, onNavigate }) {
     };
   }, [isDrawerOpen]);
 
+  useEffect(() => {
+    setSearchQuery(currentPath.startsWith('/my-account') ? 'Samsung S24 Ult' : '');
+  }, [currentPath]);
+
   const handleNavigate = (sectionId) => {
     onNavigate(sectionId);
+    setIsCategoriesOpen(false);
+    setIsDrawerOpen(false);
+  };
+
+  const handlePathNavigate = (path) => {
+    onNavigatePath(path);
     setIsCategoriesOpen(false);
     setIsDrawerOpen(false);
   };
@@ -61,35 +72,73 @@ function Navbar({ activeSection, onNavigate }) {
     <header className="navbar-wrap">
       <div className="navbar-shell">
         <div className="navbar-top">
-          <a className="brand" href="#top" aria-label="Revo Apps home">
+          <a
+            className="brand"
+            href="/"
+            aria-label="Revo Apps home"
+            onClick={(event) => {
+              event.preventDefault();
+              handlePathNavigate('/');
+            }}
+          >
             <span className="brand-mark">Revo</span>
             <span className="brand-line">Apps</span>
           </a>
 
-          <form className="searchbar" role="search">
-            <input type="search" aria-label="Search products" placeholder="Search phones, earbuds, chargers..." />
+          <form
+            className="searchbar"
+            role="search"
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
+          >
+            <input
+              type="search"
+              aria-label="Search products"
+              placeholder="Search phones, earbuds, chargers..."
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
             <button type="submit" aria-label="Search">
               <SearchIcon />
             </button>
           </form>
 
           <div className="navbar-actions">
-            <button className="icon-action" type="button" aria-label="Orders">
+            <button className="icon-action" type="button" aria-label="Orders" onClick={() => handlePathNavigate('/orders/')}>
               <ListIcon />
+              <span className="action-badge">3</span>
             </button>
-            <button className="icon-action" type="button" aria-label="Wishlist">
+            <button className="icon-action" type="button" aria-label="Wishlist" onClick={() => handlePathNavigate('/wishlist/')}>
               <HeartIcon />
+              <span className="action-badge">12</span>
             </button>
-            <button className="icon-action" type="button" aria-label="Notifications">
+            <button className="icon-action" type="button" aria-label="Notifications" onClick={() => handlePathNavigate('/notifications/')}>
               <BellIcon />
+              <span className="action-badge">4</span>
             </button>
-            <button className="icon-action" type="button" aria-label="Cart">
+            <button className="icon-action" type="button" aria-label="Cart" onClick={() => handlePathNavigate('/cart/')}>
               <CartIcon />
+              <span className="action-badge">2</span>
             </button>
-            <a className="nav-button ghost desktop-only" href="#login">
+            <a
+              className="nav-button ghost desktop-only"
+              href="/my-account/"
+              onClick={(event) => {
+                event.preventDefault();
+                handlePathNavigate('/my-account/');
+              }}
+            >
               Login
             </a>
-            <a className="nav-button solid desktop-only" href="#register">
+            <a
+              className="nav-button solid desktop-only"
+              href="/my-account/register/"
+              onClick={(event) => {
+                event.preventDefault();
+                handlePathNavigate('/my-account/register/');
+              }}
+            >
               Register
             </a>
             <button
@@ -105,7 +154,14 @@ function Navbar({ activeSection, onNavigate }) {
         </div>
 
         <div className="navbar-mobile-brand" aria-hidden="true">
-          <a className="mobile-brand-mark" href="#top">
+          <a
+            className="mobile-brand-mark"
+            href="/"
+            onClick={(event) => {
+              event.preventDefault();
+              handlePathNavigate('/');
+            }}
+          >
             <span>Revo</span>
             <span>Apps</span>
           </a>
@@ -206,6 +262,34 @@ function Navbar({ activeSection, onNavigate }) {
                   {item.label}
                 </a>
               ))}
+            </div>
+
+            <div className="drawer-group">
+              <span className="drawer-label">Quick Links</span>
+              <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/wishlist/')}>
+                <span>Wishlist</span>
+                <small>Saved items</small>
+              </button>
+              <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/notifications/')}>
+                <span>Notifications</span>
+                <small>Order updates</small>
+              </button>
+              <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/cart/')}>
+                <span>Cart</span>
+                <small>Mobile checkout</small>
+              </button>
+              <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/orders/')}>
+                <span>Orders</span>
+                <small>Track purchases</small>
+              </button>
+              <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/my-account/')}>
+                <span>Login</span>
+                <small>Account access</small>
+              </button>
+              <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/my-account/register/')}>
+                <span>Register</span>
+                <small>Create account</small>
+              </button>
             </div>
 
             <div className="drawer-group">

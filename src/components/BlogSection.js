@@ -6,11 +6,8 @@ function BlogSection({ id, posts }) {
       <div className="section-header">
         <div>
           <h2 className="section-title">Latest from the blog</h2>
-          <p className="section-subtitle">Short, useful reads to keep the storefront feeling complete.</p>
+          <p className="section-subtitle">Read our interesting articles</p>
         </div>
-        <a className="section-link" href="#top">
-          Read all articles
-        </a>
       </div>
 
       <div className="blog-grid">

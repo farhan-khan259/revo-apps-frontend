@@ -2,6 +2,11 @@
   padding: 24px 0 12px;
 }
 
+.blog-shell .section-header {
+  justify-content: center;
+  text-align: center;
+}
+
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
