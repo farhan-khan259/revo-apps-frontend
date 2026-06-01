@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import Categories from './components/Categories';
 import ProductsSection from './components/ProductsSection';
+import ProductDetailsPage from './components/ProductDetailsPage';
 import LifestyleTiles from './components/LifestyleTiles';
 import AccountPages from './components/AccountPages';
 import Footer from './components/Footer';
@@ -17,6 +18,7 @@ import {
   newProducts,
   promoTiles,
 } from './data';
+import { getProductBySlug, getRelatedProducts } from './productCatalog';
 
 const ACCOUNT_PATHS = new Set([
   '/my-account/',
@@ -29,6 +31,8 @@ const ACCOUNT_PATHS = new Set([
   '/notifications/',
 ]);
 
+const PRODUCT_PATH_PREFIX = '/product/';
+
 const normalizePath = (pathname) => {
   if (!pathname || pathname === '/') {
     return '/';
@@ -40,48 +44,56 @@ const normalizePath = (pathname) => {
 const getRouteFromLocation = () => {
   const pathname = normalizePath(window.location.pathname);
 
-  if (ACCOUNT_PATHS.has(pathname)) {
-    if (pathname === '/my-account/' || pathname === '/my-account') {
-      return 'login';
-    }
+  if (pathname.startsWith(PRODUCT_PATH_PREFIX)) {
+    const productSlug = pathname.slice(PRODUCT_PATH_PREFIX.length).replace(/\/$/, '');
 
-    if (pathname === '/my-account/register/') {
-      return 'register';
-    }
-
-    if (pathname === '/my-account/lost-password/') {
-      return 'reset';
-    }
-
-    if (pathname === '/cart/') {
-      return 'cart';
-    }
-
-    if (pathname === '/wishlist/') {
-      return 'wishlist';
-    }
-
-    if (pathname === '/orders/') {
-      return 'orders';
-    }
-
-    if (pathname === '/notifications/') {
-      return 'notifications';
+    if (productSlug) {
+      return { kind: 'product', productSlug };
     }
   }
 
-  return 'home';
+  if (ACCOUNT_PATHS.has(pathname)) {
+    if (pathname === '/my-account/' || pathname === '/my-account') {
+      return { kind: 'account', route: 'login' };
+    }
+
+    if (pathname === '/my-account/register/') {
+      return { kind: 'account', route: 'register' };
+    }
+
+    if (pathname === '/my-account/lost-password/') {
+      return { kind: 'account', route: 'reset' };
+    }
+
+    if (pathname === '/cart/') {
+      return { kind: 'account', route: 'cart' };
+    }
+
+    if (pathname === '/wishlist/') {
+      return { kind: 'account', route: 'wishlist' };
+    }
+
+    if (pathname === '/orders/') {
+      return { kind: 'account', route: 'orders' };
+    }
+
+    if (pathname === '/notifications/') {
+      return { kind: 'account', route: 'notifications' };
+    }
+  }
+
+  return { kind: 'home' };
 };
 
 function App() {
   const [activeSection, setActiveSection] = useState('top');
-  const [route, setRoute] = useState(getRouteFromLocation);
+  const [routeState, setRouteState] = useState(getRouteFromLocation);
 
   useEffect(() => {
     const syncActiveSection = () => {
       const hash = window.location.hash.replace('#', '');
       setActiveSection(hash || 'top');
-      setRoute(getRouteFromLocation());
+      setRouteState(getRouteFromLocation());
     };
 
     syncActiveSection();
@@ -98,7 +110,7 @@ function App() {
     setActiveSection(sectionId);
     if (normalizePath(window.location.pathname) !== '/' || window.location.hash.replace('#', '') !== sectionId) {
       window.history.pushState({}, '', `/#${sectionId}`);
-      setRoute('home');
+      setRouteState({ kind: 'home' });
       return;
     }
 
@@ -119,10 +131,12 @@ function App() {
     }
 
     setActiveSection('top');
-    setRoute(getRouteFromLocation());
+    setRouteState(getRouteFromLocation());
   };
 
-  const isHomeRoute = route === 'home';
+  const isHomeRoute = routeState.kind === 'home';
+  const currentProduct = routeState.kind === 'product' ? getProductBySlug(routeState.productSlug) : null;
+  const relatedProducts = currentProduct ? getRelatedProducts(currentProduct, 3) : [];
 
   return (
     <div className="app-shell">
@@ -143,6 +157,7 @@ function App() {
               subtitle="Fresh phones and accessories chosen to mirror the storefront reference"
               chips={['Phones', 'Foldables', 'Earbuds', 'Chargers', 'Power Banks', 'Cases', 'Wearables', 'Accessories']}
               products={newProducts}
+              onNavigatePath={handleNavigatePath}
             />
             <LifestyleTiles banners={promoTiles} tiles={accessoryTiles} />
             <ProductsSection
@@ -151,10 +166,13 @@ function App() {
               subtitle="Popular mobile picks with strong discounts and fast-moving stock"
               chips={['Trending', 'Top Rated', 'Flagships', 'Audio', 'Charging', 'Protection']}
               products={bestDeals}
+              onNavigatePath={handleNavigatePath}
             />
           </>
+        ) : routeState.kind === 'product' ? (
+          <ProductDetailsPage product={currentProduct} relatedProducts={relatedProducts} onNavigatePath={handleNavigatePath} />
         ) : (
-          <AccountPages route={route} onNavigatePath={handleNavigatePath} />
+          <AccountPages route={routeState.route} onNavigatePath={handleNavigatePath} />
         )}
       </main>
       {isHomeRoute ? <MobileBottomNav activeSection={activeSection} onNavigate={handleNavigate} /> : null}

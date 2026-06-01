@@ -1,9 +1,24 @@
 import './ProductsSection.css';
 import { CartIcon, HeartIcon, StarIcon } from './Icons';
+import { getProductPath } from '../productCatalog';
 
-function ProductCard({ product }) {
+export function ProductCard({ product, onNavigatePath }) {
+  const productPath = getProductPath(product);
+
+  const handleCardClick = (event) => {
+    if (!onNavigatePath) {
+      return;
+    }
+
+    event.preventDefault();
+    onNavigatePath(productPath);
+  };
+
   return (
     <article className="product-card">
+      <a className="product-card-link" href={productPath} onClick={handleCardClick} aria-label={`Open ${product.name}`}>
+        <span className="sr-only">Open {product.name}</span>
+      </a>
       <button className="wishlist-button" type="button" aria-label={`Save ${product.name}`}>
         <HeartIcon />
       </button>
@@ -33,7 +48,7 @@ function ProductCard({ product }) {
   );
 }
 
-function ProductsSection({ id, title, subtitle, chips, products }) {
+function ProductsSection({ id, title, subtitle, chips, products, onNavigatePath }) {
   return (
     <section className="products-shell section-shell" id={id}>
       <div className="section-header">
@@ -56,7 +71,7 @@ function ProductsSection({ id, title, subtitle, chips, products }) {
 
       <div className="products-row">
         {products.map((product) => (
-          <ProductCard key={product.name} product={product} />
+          <ProductCard key={product.name} product={product} onNavigatePath={onNavigatePath} />
         ))}
       </div>
     </section>
