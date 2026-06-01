@@ -3,9 +3,9 @@ import { CartIcon, HomeIcon, ReelIcon, ShopIcon, UserIcon } from './Icons';
 
 const tabItems = [
   { key: 'home', label: 'Home', target: 'categories', Icon: HomeIcon },
-  { key: 'reels', label: 'Deals', target: 'best-deals', Icon: ReelIcon },
+  { key: 'reels', label: 'Reals', target: 'best-deals', Icon: ReelIcon },
   { key: 'shop', label: 'Shop', target: 'new-products', Icon: ShopIcon },
-  { key: 'cart', label: 'Cart', target: 'best-deals', Icon: CartIcon, badge: '2' },
+  { key: 'cart', label: 'Cart', target: 'best-deals', Icon: CartIcon },
   { key: 'account', label: 'Account', target: 'account', Icon: UserIcon },
 ];
 
@@ -21,7 +21,7 @@ function MobileBottomNav({ activeSection, onNavigate }) {
 
   return (
     <nav className="mobile-bottom-nav" aria-label="Mobile bottom navigation">
-      {tabItems.map(({ key, label, target, Icon, badge }) => {
+      {tabItems.map(({ key, label, target, Icon }) => {
         const isActive = activeKey === key;
 
         return (
@@ -34,7 +34,6 @@ function MobileBottomNav({ activeSection, onNavigate }) {
           >
             <span className="mobile-bottom-iconWrap">
               <Icon />
-              {badge ? <span className="mobile-bottom-badge">{badge}</span> : null}
             </span>
             <span>{label}</span>
           </a>

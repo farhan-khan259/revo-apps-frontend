@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import './ProductDetailsPage.css';
 import { CartIcon, HeartIcon, StarIcon, ChevronIcon } from './Icons';
+import { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
+import { formatCurrency, formatIfPrice } from '../utils/currencyFormatter';
+import { useTranslation } from '../i18n';
 import { ProductCard } from './ProductsSection';
 
-const tabConfig = [
-  { id: 'description', label: 'Description' },
-  { id: 'specs', label: 'Additional Information' },
-];
+
 
 function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
   const [activeTab, setActiveTab] = useState('description');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const { lang } = useContext(LanguageContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setActiveTab('description');
@@ -23,11 +26,11 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
     return (
       <div className="product-page">
         <div className="section-shell product-page-shell product-empty-state">
-          <span className="product-breadcrumbs">Home {<ChevronIcon />} Product not found</span>
-          <h1>Product not found</h1>
-          <p>The requested item is not in the catalog, but you can return to the storefront and try another product.</p>
+          <span className="product-breadcrumbs">{t('home')} {<ChevronIcon />} {t('product.notFound')}</span>
+          <h1>{t('product.notFound')}</h1>
+          <p>{t('product.notFound')}</p>
           <button className="product-back-button" type="button" onClick={() => onNavigatePath('/')}>
-            Back to home
+            {t('product.backToHome')}
           </button>
         </div>
       </div>
@@ -42,10 +45,10 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
       <div className="section-shell product-page-shell">
         <nav className="product-breadcrumbs" aria-label="Breadcrumb">
           <button type="button" className="product-breadcrumb-link" onClick={() => onNavigatePath('/')}>
-            Home
+            {t('home')}
           </button>
           <ChevronIcon />
-          <span>Electronics</span>
+          <span>{t('electronics')}</span>
           <ChevronIcon />
           <span>{product.name}</span>
         </nav>
@@ -113,8 +116,8 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
             </div>
 
             <div className="product-price-row">
-              <strong>{product.price}</strong>
-              <span className="product-price-old">{product.oldPrice}</span>
+              <strong>{formatCurrency(product.price, lang)}</strong>
+              <span className="product-price-old">{formatCurrency(product.oldPrice, lang)}</span>
               <span className="product-discount">{product.discount}</span>
             </div>
 
@@ -153,16 +156,16 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
 
         <section className="product-tabs-card">
           <div className="product-tab-row" role="tablist" aria-label="Product details tabs">
-            {tabConfig.map((tab) => (
+            {['description', 'specs'].map((id) => (
               <button
-                key={tab.id}
+                key={id}
                 type="button"
-                className={`product-tab-button ${activeTab === tab.id ? 'is-active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                className={`product-tab-button ${activeTab === id ? 'is-active' : ''}`}
+                onClick={() => setActiveTab(id)}
                 role="tab"
-                aria-selected={activeTab === tab.id}
+                aria-selected={activeTab === id}
               >
-                {tab.label}
+                {t(`product.${id}`)}
               </button>
             ))}
           </div>
@@ -184,7 +187,7 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
                 {(product.specs || []).map((spec) => (
                   <div key={spec.label} className="product-spec-row">
                     <span>{spec.label}</span>
-                    <strong>{spec.value}</strong>
+                    <strong>{formatIfPrice(spec.value, lang)}</strong>
                   </div>
                 ))}
               </div>

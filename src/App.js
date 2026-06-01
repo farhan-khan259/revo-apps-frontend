@@ -8,6 +8,7 @@ import ProductDetailsPage from './components/ProductDetailsPage';
 import LifestyleTiles from './components/LifestyleTiles';
 import AccountPages from './components/AccountPages';
 import Footer from './components/Footer';
+import LanguageProvider from './context/LanguageContext';
 import MobileBottomNav from './components/MobileBottomNav';
 import {
   accessoryTiles,
@@ -18,6 +19,7 @@ import {
   newProducts,
   promoTiles,
 } from './data';
+import { useTranslation } from './i18n';
 import { getProductBySlug, getRelatedProducts } from './productCatalog';
 
 const ACCOUNT_PATHS = new Set([
@@ -88,6 +90,7 @@ const getRouteFromLocation = () => {
 function App() {
   const [activeSection, setActiveSection] = useState('top');
   const [routeState, setRouteState] = useState(getRouteFromLocation);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const syncActiveSection = () => {
@@ -139,8 +142,9 @@ function App() {
   const relatedProducts = currentProduct ? getRelatedProducts(currentProduct, 3) : [];
 
   return (
-    <div className="app-shell">
-      <Navbar
+    <LanguageProvider>
+      <div className="app-shell">
+        <Navbar
         activeSection={isHomeRoute ? activeSection : ''}
         currentPath={normalizePath(window.location.pathname)}
         onNavigate={handleNavigate}
@@ -153,8 +157,8 @@ function App() {
             <Categories items={categories} onNavigate={handleNavigate} />
             <ProductsSection
               id="new-products"
-              title="New Products"
-              subtitle="Fresh phones and accessories chosen to mirror the storefront reference"
+              title={t('newProducts')}
+              subtitle={t('newProducts')}
               chips={['Phones', 'Foldables', 'Earbuds', 'Chargers', 'Power Banks', 'Cases', 'Wearables', 'Accessories']}
               products={newProducts}
               onNavigatePath={handleNavigatePath}
@@ -162,8 +166,8 @@ function App() {
             <LifestyleTiles banners={promoTiles} tiles={accessoryTiles} />
             <ProductsSection
               id="best-deals"
-              title="Best Deals"
-              subtitle="Popular mobile picks with strong discounts and fast-moving stock"
+              title={t('bestDeals')}
+              subtitle={t('bestDeals')}
               chips={['Trending', 'Top Rated', 'Flagships', 'Audio', 'Charging', 'Protection']}
               products={bestDeals}
               onNavigatePath={handleNavigatePath}
@@ -176,8 +180,9 @@ function App() {
         )}
       </main>
       {isHomeRoute ? <MobileBottomNav activeSection={activeSection} onNavigate={handleNavigate} /> : null}
-      <Footer id={isHomeRoute ? 'account' : undefined} />
-    </div>
+        <Footer id={isHomeRoute ? 'account' : undefined} />
+      </div>
+    </LanguageProvider>
   );
 }
 

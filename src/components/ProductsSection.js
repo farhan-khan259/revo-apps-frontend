@@ -1,8 +1,13 @@
 import './ProductsSection.css';
 import { CartIcon, HeartIcon, StarIcon } from './Icons';
 import { getProductPath } from '../productCatalog';
+import { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
+import { formatCurrency } from '../utils/currencyFormatter';
+import { useTranslation } from '../i18n';
 
 export function ProductCard({ product, onNavigatePath }) {
+  const { lang } = useContext(LanguageContext);
   const productPath = getProductPath(product);
 
   const handleCardClick = (event) => {
@@ -30,9 +35,9 @@ export function ProductCard({ product, onNavigatePath }) {
         <p>{product.description || 'You can write your product short description here to highlight the phone features.'}</p>
         <div className="price-row">
           <span className="discount">{product.discount}</span>
-          <span className="old-price">{product.oldPrice}</span>
+          <span className="old-price">{formatCurrency(product.oldPrice, lang)}</span>
         </div>
-        <strong className="current-price">{product.price}</strong>
+        <strong className="current-price">{formatCurrency(product.price, lang)}</strong>
         <div className="meta-row">
           <span className="rating">
             <StarIcon />
@@ -49,6 +54,7 @@ export function ProductCard({ product, onNavigatePath }) {
 }
 
 function ProductsSection({ id, title, subtitle, chips, products, onNavigatePath }) {
+  const { t } = useTranslation();
   return (
     <section className="products-shell section-shell" id={id}>
       <div className="section-header">
@@ -57,7 +63,7 @@ function ProductsSection({ id, title, subtitle, chips, products, onNavigatePath 
           <p className="section-subtitle">{subtitle}</p>
         </div>
         <a className="section-link" href="#top">
-          View all
+          {t('viewAll')}
         </a>
       </div>
 

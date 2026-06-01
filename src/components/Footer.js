@@ -1,7 +1,9 @@
 import './Footer.css';
+import { useTranslation } from '../i18n';
 
 
 function Footer({ id }) {
+  const { t } = useTranslation();
   return (
     <footer className="footer-wrap" id={id}>
       <div className="footer-shell section-shell">
@@ -10,25 +12,23 @@ function Footer({ id }) {
             <span className="brand-mark">Revo</span>
             <span className="brand-line">Apps</span>
           </a>
-          <p>
-            Built for Maximum Sales Conversion. The Ultimate WooCommerce Website Builder you&apos;ve been waiting for!
-          </p>
+          <p>{t('footer.brandCopy')}</p>
         </div>
 
         <div className="footer-columns">
           <div>
-            <h3>Company Info</h3>
-            <a href="#top">About Us</a>
-            <a href="#top">Contact</a>
-            <a href="#top">Careers</a>
-            <a href="#top">Press</a>
+            <h3>{t('footer.companyInfo')}</h3>
+            <a href="#top">{t('footer.about')}</a>
+            <a href="#top">{t('footer.contact')}</a>
+            <a href="#top">{t('footer.careers')}</a>
+            <a href="#top">{t('footer.press')}</a>
           </div>
           <div>
-            <h3>Customer Service</h3>
-            <a href="#top">How to Order</a>
-            <a href="#top">Return and Refund Policy</a>
-            <a href="#top">Shipping Info</a>
-            <a href="#top">Delivery Information</a>
+            <h3>{t('footer.customerService')}</h3>
+            <a href="#top">{t('footer.howToOrder')}</a>
+            <a href="#top">{t('footer.returns')}</a>
+            <a href="#top">{t('footer.shipping')}</a>
+            <a href="#top">{t('footer.delivery')}</a>
           </div>
         </div>
 

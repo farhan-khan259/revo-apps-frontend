@@ -1,12 +1,15 @@
 import './Navbar.css';
 import { useEffect, useState } from 'react';
+import { useTranslation } from '../i18n';
 import { BellIcon, CartIcon, HeartIcon, ListIcon, MenuIcon, SearchIcon } from './Icons';
+import { useContext } from 'react';
+import { LanguageContext, SUPPORTED_LANGS } from '../context/LanguageContext';
 
 const navItems = [
-  { label: 'New Arrival', target: 'new-products' },
-  { label: 'Limited Offers', target: 'best-deals' },
-  { label: 'Shop', target: 'new-products' },
-  { label: 'Blogs', target: 'blog' },
+  { key: 'nav.newArrival', target: 'new-products' },
+  { key: 'nav.limitedOffers', target: 'best-deals' },
+  { key: 'nav.shop', target: 'new-products' },
+  { key: 'nav.blogs', target: 'blog' },
 ];
 
 const categoryMenu = [
@@ -21,6 +24,7 @@ const categoryMenu = [
 ];
 
 function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
+  const { t } = useTranslation();
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -68,6 +72,21 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
     setIsDrawerOpen(false);
   };
 
+  function LangToggle() {
+    const { lang, toggleLang } = useContext(LanguageContext);
+
+    return (
+      <button
+        type="button"
+        className="lang-button"
+        onClick={() => toggleLang()}
+        aria-label={`Switch language, current ${lang}`}
+      >
+        {lang === SUPPORTED_LANGS.EN ? 'EN' : 'AR'}
+      </button>
+    );
+  }
+
   return (
     <header className="navbar-wrap">
       <div className="navbar-shell">
@@ -85,6 +104,11 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
             <span className="brand-line">Apps</span>
           </a>
 
+          {/* Language toggle */}
+          <div className="lang-toggle">
+            <LangToggle />
+          </div>
+
           <form
             className="searchbar"
             role="search"
@@ -95,7 +119,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
             <input
               type="search"
               aria-label="Search products"
-              placeholder="Search phones, earbuds, chargers..."
+              placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
@@ -107,19 +131,15 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
           <div className="navbar-actions">
             <button className="icon-action" type="button" aria-label="Orders" onClick={() => handlePathNavigate('/orders/')}>
               <ListIcon />
-              <span className="action-badge">3</span>
             </button>
             <button className="icon-action" type="button" aria-label="Wishlist" onClick={() => handlePathNavigate('/wishlist/')}>
               <HeartIcon />
-              <span className="action-badge">12</span>
             </button>
             <button className="icon-action" type="button" aria-label="Notifications" onClick={() => handlePathNavigate('/notifications/')}>
               <BellIcon />
-              <span className="action-badge">4</span>
             </button>
             <button className="icon-action" type="button" aria-label="Cart" onClick={() => handlePathNavigate('/cart/')}>
               <CartIcon />
-              <span className="action-badge">2</span>
             </button>
             <a
               className="nav-button ghost desktop-only"
@@ -129,7 +149,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
                 handlePathNavigate('/my-account/');
               }}
             >
-              Login
+              {t('login')}
             </a>
             <a
               className="nav-button solid desktop-only"
@@ -139,7 +159,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
                 handlePathNavigate('/my-account/register/');
               }}
             >
-              Register
+              {t('register')}
             </a>
             <button
               className="icon-action mobile-only menu-button"
@@ -152,6 +172,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
             </button>
           </div>
         </div>
+
 
         <div className="navbar-mobile-brand" aria-hidden="true">
           <a
@@ -166,8 +187,8 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
             <span>Apps</span>
           </a>
           <div className="mobile-brand-copy">
-            <strong>Revo Apps Theme</strong>
-            <span>Please Login Here</span>
+            <strong>{t('brandTheme')}</strong>
+            <span>{t('pleaseLogin')}</span>
           </div>
         </div>
 
@@ -181,7 +202,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
               aria-controls="categories-dropdown"
             >
               <MenuIcon />
-              All Categories
+              {t('nav.allCategories')}
               <span className="pill-caret" aria-hidden="true" />
             </button>
 
@@ -218,13 +239,13 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
           <div className="nav-links" aria-label="Section links">
             {navItems.map((item) => (
               <a
-                key={item.label}
+                key={item.key}
                 className={activeSection === item.target ? 'active' : ''}
                 href={`#${item.target}`}
                 onClick={() => handleNavigate(item.target)}
                 aria-current={activeSection === item.target ? 'page' : undefined}
               >
-                {item.label}
+                {t(item.key)}
               </a>
             ))}
           </div>

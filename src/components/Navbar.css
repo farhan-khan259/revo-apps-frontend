@@ -41,6 +41,24 @@
   flex-shrink: 0;
 }
 
+.lang-toggle {
+  margin-left: 10px;
+}
+
+.lang-button {
+  border: 0;
+  background: transparent;
+  color: #202020;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lang-button:hover {
+  background: rgba(0,0,0,0.04);
+}
+
 .brand-mark {
   color: #f5f5f5;
   font-size: 12px;
@@ -399,31 +417,38 @@
 }
 
 @media (max-width: 960px) {
+  .navbar-wrap {
+    background: #ef1f1f;
+    border-bottom-color: transparent;
+  }
+
   .navbar-shell {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: min(1180px, calc(100% - 20px));
-    padding-bottom: 10px;
+    padding: 12px 12px 10px;
+    background: transparent;
   }
 
   .navbar-mobile-brand {
     display: flex;
     align-items: center;
     gap: 10px;
-    order: 1;
+    order: 3;
     margin-top: 0;
-    padding: 8px 0 0;
+    padding: 10px 0 0;
+    color: #fff;
   }
 
   .navbar-top {
-    order: 2;
+    order: 1;
     flex-direction: row;
     align-items: stretch;
     gap: 10px;
   }
 
-  .brand {
+  .navbar-top .brand {
     display: none;
   }
 
@@ -435,6 +460,29 @@
     height: 42px;
     border-color: rgba(255, 255, 255, 0.35);
     box-shadow: none;
+    background: #ffffff;
+  }
+
+  .lang-button,
+  .navbar-actions .icon-action,
+  .navbar-actions .menu-button {
+    color: #fff;
+  }
+
+  .mobile-brand-copy strong,
+  .mobile-brand-copy span {
+    color: #fff;
+  }
+
+  .navbar-actions {
+    order: 2;
+    margin-left: 0;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
   }
 
   .searchbar input::placeholder {
@@ -458,7 +506,7 @@
 
   .navbar-actions .icon-action,
   .navbar-actions .menu-button {
-    color: #222;
+    color: #fff;
   }
 
   .navbar-actions .action-badge {

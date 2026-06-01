@@ -1,5 +1,7 @@
 .app-shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   color: #1e1e1f;
 }
@@ -13,6 +15,7 @@ section[id] {
 }
 
 main {
+  flex: 1;
   padding-bottom: 48px;
 }
 
