@@ -1,0 +1,208 @@
+.reels-shell {
+  padding: 32px 0 24px;
+}
+
+.reels-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.reels-eyebrow {
+  display: inline-flex;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 800;
+  color: #ef1f1f;
+  font-size: 12px;
+}
+
+.reels-title {
+  margin: 8px 0 0;
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.05;
+  color: #111;
+}
+
+.reels-action {
+  background: #111;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 14px 22px;
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.reels-action:hover {
+  transform: translateY(-1px);
+  background: #222;
+}
+
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.reel-card {
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  text-align: left;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.reel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 46px rgba(15, 23, 42, 0.12);
+}
+
+.reel-thumb {
+  position: relative;
+  width: 100%;
+  min-height: 240px;
+  background-size: cover;
+  background-position: center;
+}
+
+.reel-play-icon {
+  position: absolute;
+  inset: auto auto 18px 18px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  display: grid;
+  place-items: center;
+  color: #111;
+  box-shadow: 0 18px 28px rgba(15, 23, 42, 0.16);
+}
+
+.reel-copy {
+  padding: 18px 18px 22px;
+}
+
+.reel-category {
+  display: inline-flex;
+  color: #ef1f1f;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reel-copy strong {
+  display: block;
+  margin: 12px 0 8px;
+  font-size: 18px;
+  color: #111;
+  line-height: 1.25;
+}
+
+.reel-meta {
+  display: block;
+  color: #6b6b6b;
+  font-size: 13px;
+}
+
+.reel-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+}
+
+.reel-backdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.reel-modal-content {
+  position: relative;
+  max-width: min(920px, calc(100% - 40px));
+  width: 100%;
+  background: #fff;
+  border-radius: 28px;
+  padding: 28px;
+  z-index: 81;
+  box-shadow: 0 34px 90px rgba(15, 23, 42, 0.25);
+}
+
+.reel-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.reel-close {
+  border: 0;
+  background: rgba(15, 23, 42, 0.05);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.reel-player {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.reel-player-inner {
+  width: 100%;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reel-player-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #111;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.reel-modal p {
+  margin: 0;
+  color: #4b4b4b;
+  line-height: 1.7;
+}
+
+@media (max-width: 960px) {
+  .reels-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .reels-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reels-grid {
+    grid-template-columns: 1fr;
+  }
+}

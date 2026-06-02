@@ -1,5 +1,6 @@
 import './HeroSection.css';
 import { useEffect, useMemo, useState } from 'react';
+import { ChevronIcon } from './Icons';
 
 function HeroSection({ stats, slides, onNavigate }) {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -24,46 +25,24 @@ function HeroSection({ stats, slides, onNavigate }) {
     return slides[activeSlide % slides.length];
   }, [activeSlide, slides]);
 
+  const handleSlideChange = (direction) => {
+    setActiveSlide((current) => {
+      if (direction === 'next') {
+        return (current + 1) % slides.length;
+      }
+      return (current - 1 + slides.length) % slides.length;
+    });
+  };
+
   return (
     <section className="hero-shell" id="top">
       <div className="hero-card section-shell">
-        <div className="hero-copy">
-          <span className="eyebrow">{currentSlide?.eyebrow}</span>
-          <h1>{currentSlide?.title}</h1>
-          <p>{currentSlide?.description}</p>
-          <div className="hero-actions">
-            <a className="hero-primary" href="#new-products" onClick={() => onNavigate('new-products')}>
-              Shop now
-            </a>
-            <a className="hero-secondary" href="#categories" onClick={() => onNavigate('categories')}>
-              Browse categories
-            </a>
-          </div>
-          <div className="hero-stats">
-            {stats.map((stat) => (
-              <div className="hero-stat" key={stat.label}>
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="hero-visual" aria-hidden="true">
           <div className="hero-carousel" aria-hidden="true">
             <div className="hero-track" style={{ transform: `translateX(-${activeSlide * 100}%)` }}>
               {slides.map((slide) => (
-                <div className="hero-slide" key={slide.title}>
-                  <div className="hero-shape hero-shape-left" />
-                  <div className="hero-shape hero-shape-right" />
-                  <div className="hero-image-wrap hero-image-main">
-                    <img src={slide.mainImage} alt="" />
-                  </div>
-                  <div className="hero-image-wrap hero-image-secondary">
-                    <img src={slide.secondaryImage} alt="" />
-                  </div>
-                  <div className="hero-badge hero-badge-top">{slide.badgeTop}</div>
-                  <div className="hero-badge hero-badge-bottom">{slide.badgeBottom}</div>
+                <div className="hero-slide" key={slide.key}>
+                  <div className="hero-slide-image" style={{ backgroundImage: `url(${slide.image})` }} />
                 </div>
               ))}
             </div>
@@ -72,7 +51,7 @@ function HeroSection({ stats, slides, onNavigate }) {
           <div className="hero-dots" aria-hidden="true">
             {slides.map((slide, index) => (
               <button
-                key={slide.title}
+                key={slide.key}
                 className={`hero-dot ${index === activeSlide ? 'active' : ''}`}
                 type="button"
                 onClick={() => setActiveSlide(index)}

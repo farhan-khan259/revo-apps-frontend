@@ -1,39 +1,16 @@
-export const heroStats = [
-  { value: '250+', label: 'Mobile products curated' },
-  { value: '24h', label: 'Fast dispatch readiness' },
-  { value: '4.9/5', label: 'Customer rating focus' },
-];
+import slideSneaker from './Assets/sliding-banner-theme-1.webp';
+import slideWatches from './Assets/sliding-banner-theme-2.webp';
+
+export const heroStats = [];
 
 export const heroSlides = [
   {
-    eyebrow: 'New arrival',
-    title: 'Crafted for Prestige',
-    description:
-      'Premium phones, bold accessories, and the clean marketplace layout reflected in the provided screenshots.',
-    mainImage: '/images/phone-smart.jpg',
-    secondaryImage: '/images/phone-flip.jpg',
-    badgeTop: 'Gold Series',
-    badgeBottom: 'Pro Camera Phones',
+    key: 'slide-1',
+    image: slideSneaker,
   },
   {
-    eyebrow: 'Special price',
-    title: 'New Arrival',
-    description:
-      'A compact hero treatment that keeps the storefront feeling sharp on desktop and mobile devices.',
-    mainImage: '/images/phone-side.jpg',
-    secondaryImage: '/images/earbuds2.jpg',
-    badgeTop: '30% Off',
-    badgeBottom: 'Flagship Edition',
-  },
-  {
-    eyebrow: 'Mobile essentials',
-    title: 'Complete your setup',
-    description:
-      'Chargers, earbuds, and power banks styled to echo the larger promotional sections below.',
-    mainImage: '/images/charger.jpg',
-    secondaryImage: '/images/powerbank.jpg',
-    badgeTop: 'Accessory Set',
-    badgeBottom: 'Everyday Carry',
+    key: 'slide-2',
+    image: slideWatches,
   },
 ];
 
@@ -46,6 +23,55 @@ export const categories = [
   { name: 'Cases', image: '/images/cases.jpg' },
   { name: 'Wearables', image: '/images/watch.jpg' },
   { name: 'Accessories', image: '/images/earbuds2.jpg' },
+  { name: 'Groceries', image: '/images/phone-side.jpg' },
+  { name: 'Jewelry', image: '/images/watch.jpg' },
+  { name: 'Kids', image: '/images/phone-flip.jpg' },
+  { name: 'Men', image: '/images/phone-smart.jpg' },
+  { name: 'Shoes', image: '/images/charger.jpg' },
+  { name: 'Toys & Games', image: '/images/powerbank.jpg' },
+];
+
+export const reels = [
+  {
+    title: 'Street Style Essentials',
+    category: 'Fashion',
+    thumbnail: '/images/phone-smart.jpg',
+    duration: '0:18',
+    views: '12.4K',
+    description: 'A quick reel showcasing the latest streetwear pieces in a sharp, high-energy cut.',
+  },
+  {
+    title: 'Everyday Tech Setup',
+    category: 'Lifestyle',
+    thumbnail: '/images/phone-flip.jpg',
+    duration: '0:22',
+    views: '8.1K',
+    description: 'Fast cuts of premium gadgets and accessories for everyday use.',
+  },
+  {
+    title: 'Minimal Accessory Drops',
+    category: 'Accessories',
+    thumbnail: '/images/earbuds.jpg',
+    duration: '0:16',
+    views: '15.3K',
+    description: 'A short visual story of clean accessory styling and product highlights.',
+  },
+  {
+    title: 'Performance Essentials',
+    category: 'Fitness',
+    thumbnail: '/images/charger.jpg',
+    duration: '0:20',
+    views: '10.2K',
+    description: 'Highlighting everyday wearable and power gear for modern active lifestyles.',
+  },
+  {
+    title: 'Compact Power Picks',
+    category: 'Tech',
+    thumbnail: '/images/powerbank.jpg',
+    duration: '0:14',
+    views: '9.8K',
+    description: 'Fast reel focused on sleek charging and battery tech for on-the-go users.',
+  },
 ];
 
 export const newProducts = [
@@ -218,7 +244,7 @@ export const accessoryTiles = [
   { title: 'Cases', image: '/images/cases.jpg' },
 ];
 
-export const blogPosts = [
+export const reelsPosts = [
   {
     title: 'How to choose the right phone for your daily use',
     text: 'Compare display, battery, storage, and camera priorities before you buy.',

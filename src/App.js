@@ -6,6 +6,7 @@ import Categories from './components/Categories';
 import ProductsSection from './components/ProductsSection';
 import ProductDetailsPage from './components/ProductDetailsPage';
 import LifestyleTiles from './components/LifestyleTiles';
+import ReelsSection from './components/ReelsSection';
 import AccountPages from './components/AccountPages';
 import Footer from './components/Footer';
 import LanguageProvider from './context/LanguageContext';
@@ -18,6 +19,7 @@ import {
   heroStats,
   newProducts,
   promoTiles,
+  reels,
 } from './data';
 import { useTranslation } from './i18n';
 import { getProductBySlug, getRelatedProducts } from './productCatalog';
@@ -155,6 +157,7 @@ function App() {
           <>
             <HeroSection stats={heroStats} slides={heroSlides} onNavigate={handleNavigate} />
             <Categories items={categories} onNavigate={handleNavigate} />
+            <ReelsSection reels={reels} />
             <ProductsSection
               id="new-products"
               title={t('newProducts')}

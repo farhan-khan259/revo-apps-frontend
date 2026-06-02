@@ -9,7 +9,7 @@ const navItems = [
   { key: 'nav.newArrival', target: 'new-products' },
   { key: 'nav.limitedOffers', target: 'best-deals' },
   { key: 'nav.shop', target: 'new-products' },
-  { key: 'nav.blogs', target: 'blog' },
+  { key: 'nav.reels', target: 'reels' },
 ];
 
 const categoryMenu = [
@@ -90,18 +90,19 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
   return (
     <header className="navbar-wrap">
       <div className="navbar-shell">
+        
         <div className="navbar-top">
           <a
             className="brand"
             href="/"
-            aria-label="Revo Apps home"
+            aria-label="Creative Imprints home"
             onClick={(event) => {
               event.preventDefault();
               handlePathNavigate('/');
             }}
           >
-            <span className="brand-mark">Revo</span>
-            <span className="brand-line">Apps</span>
+            <span className="brand-mark">Creative</span>
+            <span className="brand-line">Imprints</span>
           </a>
 
           {/* Language toggle */}
@@ -183,8 +184,8 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
               handlePathNavigate('/');
             }}
           >
-            <span>Revo</span>
-            <span>Apps</span>
+            <span>Creative</span>
+            <span>Imprints</span>
           </a>
           <div className="mobile-brand-copy">
             <strong>{t('brandTheme')}</strong>

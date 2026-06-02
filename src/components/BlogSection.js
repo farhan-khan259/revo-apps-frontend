@@ -5,8 +5,8 @@ function BlogSection({ id, posts }) {
     <section className="blog-shell section-shell" id={id}>
       <div className="section-header">
         <div>
-          <h2 className="section-title">Latest from the blog</h2>
-          <p className="section-subtitle">Read our interesting articles</p>
+          <h2 className="section-title">Latest Reels</h2>
+          <p className="section-subtitle">Check out our latest video content</p>
         </div>
       </div>
 

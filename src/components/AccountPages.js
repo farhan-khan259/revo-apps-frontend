@@ -161,7 +161,7 @@ function RegisterPage({ onNavigatePath }) {
         <AccountHero
           kicker="Create account"
           title="Register"
-          subtitle="Set up your Revo Apps profile to track orders, save accessories, and get mobile-only offers."
+          subtitle="Set up your Creative Imprints profile to track orders, save accessories, and get mobile-only offers."
           onNavigatePath={onNavigatePath}
         />
 

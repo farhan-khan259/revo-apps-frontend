@@ -8,9 +8,9 @@ function Footer({ id }) {
     <footer className="footer-wrap" id={id}>
       <div className="footer-shell section-shell">
         <div className="footer-brand">
-          <a className="brand footer-brand-logo" href="/" aria-label="Revo Apps home">
-            <span className="brand-mark">Revo</span>
-            <span className="brand-line">Apps</span>
+          <a className="brand footer-brand-logo" href="/" aria-label="Creative Imprints home">
+            <span className="brand-mark">Creative</span>
+            <span className="brand-line">Imprints</span>
           </a>
           <p>{t('footer.brandCopy')}</p>
         </div>
