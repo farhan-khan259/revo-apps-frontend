@@ -1,14 +1,8 @@
 import './Categories.css';
-import { ChevronIcon } from './Icons';
+
 
 function Categories({ items, onNavigate }) {
-  const handleScroll = (direction) => {
-    const row = document.getElementById('categories-row');
-    if (!row) return;
-    const offset = row.clientWidth * 0.5;
-    row.scrollBy({ left: direction === 'left' ? -offset : offset, behavior: 'smooth' });
-  };
-
+  
   return (
     <section className="categories-shell section-shell" id="categories">
       <div className="category-row-wrapper">
