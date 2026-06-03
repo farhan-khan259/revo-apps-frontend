@@ -1,6 +1,5 @@
 import './HeroSection.css';
-import { useEffect, useMemo, useState } from 'react';
-import { ChevronIcon } from './Icons';
+import { useEffect, useState } from 'react';
 
 function HeroSection({ stats, slides, onNavigate }) {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -16,23 +15,6 @@ function HeroSection({ stats, slides, onNavigate }) {
 
     return () => window.clearInterval(intervalId);
   }, [slides]);
-
-  const currentSlide = useMemo(() => {
-    if (!slides?.length) {
-      return null;
-    }
-
-    return slides[activeSlide % slides.length];
-  }, [activeSlide, slides]);
-
-  const handleSlideChange = (direction) => {
-    setActiveSlide((current) => {
-      if (direction === 'next') {
-        return (current + 1) % slides.length;
-      }
-      return (current - 1 + slides.length) % slides.length;
-    });
-  };
 
   return (
     <section className="hero-shell" id="top">

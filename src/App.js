@@ -116,12 +116,19 @@ function App() {
     if (normalizePath(window.location.pathname) !== '/' || window.location.hash.replace('#', '') !== sectionId) {
       window.history.pushState({}, '', `/#${sectionId}`);
       setRouteState({ kind: 'home' });
-      return;
-    }
-
-    if (window.location.hash.replace('#', '') !== sectionId) {
+    } else if (window.location.hash.replace('#', '') !== sectionId) {
       window.location.hash = sectionId;
     }
+    
+    // Scroll to section after state updates
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else if (sectionId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 0);
   };
 
   const handleNavigatePath = (path) => {
@@ -154,35 +161,38 @@ function App() {
       />
       <main>
         {isHomeRoute ? (
-          <>
-            <HeroSection stats={heroStats} slides={heroSlides} onNavigate={handleNavigate} />
-            <Categories items={categories} onNavigate={handleNavigate} />
+          activeSection === 'reels' ? (
             <ReelsSection reels={reels} />
-            <ProductsSection
-              id="new-products"
-              title={t('newProducts')}
-              subtitle={t('newProducts')}
-              chips={['Phones', 'Foldables', 'Earbuds', 'Chargers', 'Power Banks', 'Cases', 'Wearables', 'Accessories']}
-              products={newProducts}
-              onNavigatePath={handleNavigatePath}
-            />
-            <LifestyleTiles banners={promoTiles} tiles={accessoryTiles} />
-            <ProductsSection
-              id="best-deals"
-              title={t('bestDeals')}
-              subtitle={t('bestDeals')}
-              chips={['Trending', 'Top Rated', 'Flagships', 'Audio', 'Charging', 'Protection']}
-              products={bestDeals}
-              onNavigatePath={handleNavigatePath}
-            />
-          </>
+          ) : (
+            <>
+              <HeroSection stats={heroStats} slides={heroSlides} onNavigate={handleNavigate} />
+              <Categories items={categories} onNavigate={handleNavigate} />
+              <ProductsSection
+                id="new-products"
+                title={t('newProducts')}
+                subtitle={t('newProducts')}
+                chips={['Phones', 'Foldables', 'Earbuds', 'Chargers', 'Power Banks', 'Cases', 'Wearables', 'Accessories']}
+                products={newProducts}
+                onNavigatePath={handleNavigatePath}
+              />
+              <LifestyleTiles banners={promoTiles} tiles={accessoryTiles} />
+              <ProductsSection
+                id="best-deals"
+                title={t('bestDeals')}
+                subtitle={t('bestDeals')}
+                chips={['Trending', 'Top Rated', 'Flagships', 'Audio', 'Charging', 'Protection']}
+                products={bestDeals}
+                onNavigatePath={handleNavigatePath}
+              />
+            </>
+          )
         ) : routeState.kind === 'product' ? (
           <ProductDetailsPage product={currentProduct} relatedProducts={relatedProducts} onNavigatePath={handleNavigatePath} />
         ) : (
           <AccountPages route={routeState.route} onNavigatePath={handleNavigatePath} />
         )}
       </main>
-      {isHomeRoute ? <MobileBottomNav activeSection={activeSection} onNavigate={handleNavigate} /> : null}
+      {isHomeRoute ? <MobileBottomNav activeSection={activeSection} onNavigate={handleNavigate} onNavigatePath={handleNavigatePath} /> : null}
         <Footer id={isHomeRoute ? 'account' : undefined} />
       </div>
     </LanguageProvider>

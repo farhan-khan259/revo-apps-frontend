@@ -123,7 +123,12 @@
   }
 
   .hero-visual {
-    min-height: 260px;
+    min-height: 180px;
+  }
+
+  .hero-slide-image {
+    background-size: cover;
+    background-position: center center;
   }
 
   .hero-copy p {

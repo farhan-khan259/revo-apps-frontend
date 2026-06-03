@@ -11,9 +11,6 @@ function Categories({ items, onNavigate }) {
 
   return (
     <section className="categories-shell section-shell" id="categories">
-      <button className="category-scroll-button prev" type="button" onClick={() => handleScroll('left')} aria-label="Scroll categories left">
-        <ChevronIcon />
-      </button>
       <div className="category-row-wrapper">
         <div className="categories-row" id="categories-row" aria-label="Mobile categories">
           {items.map((item) => (
@@ -26,9 +23,6 @@ function Categories({ items, onNavigate }) {
           ))}
         </div>
       </div>
-      <button className="category-scroll-button next" type="button" onClick={() => handleScroll('right')} aria-label="Scroll categories right">
-        <ChevronIcon />
-      </button>
     </section>
   );
 }
