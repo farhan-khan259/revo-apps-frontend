@@ -10,12 +10,33 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const initializeAuth = async () => {
+      const token = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+
+      try {
+        const { data } = await api.get('/auth/profile');
+        setUser(data.user);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      } catch (err) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
   }, []);
 
   const login = async (email, password) => {

@@ -282,17 +282,16 @@ function App() {
             <CartProvider>
               <AuthProvider>
                 <Routes>
-               
-                <Route path="/admin" element={<Login />} />
-               
-                <Route
-                  path="/admin/*"
-                  element={
-                    <ProtectedRoute>
-                      <AdminLayout />
-                    </ProtectedRoute>
-                  }
-                >
+                  <Route path="/admin" element={<Login />} />
+                  <Route path="/admin/login" element={<Login />} />
+                  <Route
+                    path="/admin/*"
+                    element={
+                      <ProtectedRoute>
+                        <AdminLayout />
+                      </ProtectedRoute>
+                    }
+                  >
                   <Route index element={<AdminDashboard />} />
                   <Route path="products" element={<AdminProducts />} />
                   <Route path="categories" element={<AdminCategories />} />

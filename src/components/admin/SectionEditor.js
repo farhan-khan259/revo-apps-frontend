@@ -33,14 +33,16 @@ export default function SectionEditor({ sectionKey, title, children, onSave }) {
   const handleSave = async () => {
     try {
       setSaving(true);
+      setError('');
       const payload = showJson ? JSON.parse(jsonText) : data;
       await api.put(`/admin/config/${sectionKey}`, { value: payload });
       setData(payload);
       if (onSave) onSave(payload);
       alert('Configuration saved successfully');
     } catch (err) {
-      setError('Failed to save configuration');
-      console.error(err);
+      const apiMessage = err.response?.data?.message;
+      setError(apiMessage || err.message || 'Failed to save configuration');
+      console.error('Config save error:', err);
     } finally {
       setSaving(false);
     }
