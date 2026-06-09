@@ -8,7 +8,7 @@ export default function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data } = await api.get('/admin/users');
+        const { data } = await api.get('/users');
         setUsers(data);
       } catch (err) {
         console.error(err);

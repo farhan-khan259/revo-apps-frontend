@@ -8,7 +8,7 @@ export default function ConfirmOrders() {
   useEffect(() => {
     const fetchPending = async () => {
       try {
-        const { data } = await api.get('/admin/orders?status=pending');
+        const { data } = await api.get('/orders?status=pending');
         setOrders(data);
       } catch (err) {
         console.error(err);

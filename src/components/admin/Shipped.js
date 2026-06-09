@@ -8,7 +8,7 @@ export default function Shipped() {
   useEffect(() => {
     const fetchShipped = async () => {
       try {
-        const { data } = await api.get('/admin/orders?status=shipped');
+        const { data } = await api.get('/orders?status=shipped');
         setOrders(data);
       } catch (err) {
         console.error(err);

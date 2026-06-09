@@ -22,7 +22,7 @@ export default function Orders() {
 
   const fetchOrders = async () => {
     try {
-      const { data } = await api.get('/admin/orders');
+      const { data } = await api.get('/orders');
       setOrders(data.orders || []);
     } catch (err) {
       setError('Failed to load orders');

@@ -12,7 +12,7 @@ export default function Users() {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await api.get('/admin/users');
+      const { data } = await api.get('/users');
       setUsers(data.users || []);
     } catch (err) {
       setError('Failed to load users');

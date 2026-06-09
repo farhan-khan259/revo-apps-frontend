@@ -21,7 +21,7 @@ export default function Categories() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/admin/categories', form);
+      await api.post('/categories', form);
       fetchCategories();
       setForm({ name: '', image: '' });
       setError('');

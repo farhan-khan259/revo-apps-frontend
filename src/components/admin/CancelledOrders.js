@@ -8,7 +8,7 @@ export default function CancelledOrders() {
   useEffect(() => {
     const fetchCancelled = async () => {
       try {
-        const { data } = await api.get('/admin/orders?status=cancelled');
+        const { data } = await api.get('/orders?status=cancelled');
         setOrders(data);
       } catch (err) {
         console.error(err);

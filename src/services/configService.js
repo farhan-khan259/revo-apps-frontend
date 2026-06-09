@@ -2,7 +2,7 @@ import api from '../api';
 
 export async function fetchAllConfig() {
   try {
-    const { data } = await api.get('/config/all');
+    const { data } = await api.get('/admin/config/all');
     return data;
   } catch (err) {
     if (err.response?.status === 401) {

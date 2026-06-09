@@ -29,7 +29,7 @@ export default function Categories() {
       if (editing) {
         await api.put(`/admin/categories/${editing}`, form);
       } else {
-        await api.post('/admin/categories', form);
+        await api.post('/categories', form);
       }
       await fetchCategories();
       resetForm();

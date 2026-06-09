@@ -10,7 +10,7 @@ export default function ImagePicker({ onSelect, isOpen, onClose }) {
     if (isOpen && images.length === 0) {
       try {
         setLoading(true);
-        const { data } = await api.get('/media');
+        const { data } = await api.get('/admin/media');
         setImages(data.media || []);
       } catch (err) {
         console.error('Failed to load media:', err);
@@ -28,7 +28,7 @@ export default function ImagePicker({ onSelect, isOpen, onClose }) {
     formData.append('file', file);
 
     try {
-      const { data } = await api.post('/admin/upload', formData, {
+      const { data } = await api.post('/admin/media/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setImages([...images, data]);

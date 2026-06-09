@@ -13,7 +13,7 @@ export default function MediaLibrary() {
 
   const fetchMedia = async () => {
     try {
-      const { data } = await api.get('/media');
+      const { data } = await api.get('/admin/media');
       setMedia(data.media || []);
     } catch (err) {
       setError('Failed to load media');
@@ -32,7 +32,7 @@ export default function MediaLibrary() {
 
     try {
       setUploading(true);
-      await api.post('/admin/upload', formData, {
+      await api.post('/admin/media/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       await fetchMedia();

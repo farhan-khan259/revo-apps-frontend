@@ -13,7 +13,7 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await api.get('/admin/products');
+      const { data } = await api.get('/products');
       setProducts(data.products || []);
     } catch (err) {
       console.error(err);
@@ -27,7 +27,7 @@ export default function Products() {
       if (editing) {
         await api.put(`/admin/products/${editing}`, form);
       } else {
-        await api.post('/admin/products', form);
+        await api.post('/products', form);
       }
       await fetchProducts();
       setEditing(null);

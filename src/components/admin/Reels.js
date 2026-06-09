@@ -33,9 +33,9 @@ export default function Reels() {
     e.preventDefault();
     try {
       if (editing) {
-        await api.put(`/admin/reels/${editing}`, form);
+        await api.put(`/reels/${editing}`, form);
       } else {
-        await api.post('/admin/reels', form);
+        await api.post('/reels', form);
       }
       await fetchReels();
       resetForm();

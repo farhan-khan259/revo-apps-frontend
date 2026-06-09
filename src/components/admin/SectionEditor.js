@@ -18,7 +18,7 @@ export default function SectionEditor({ sectionKey, title, children, onSave }) {
   const loadData = async () => {
     try {
       setLoading(true);
-      const { data: config } = await api.get('/config/all');
+      const { data: config } = await api.get('/admin/config/all');
       setFullConfig(config || {});
       setData(config[sectionKey] || {});
       setJsonText(JSON.stringify(config[sectionKey] || {}, null, 2));
@@ -34,7 +34,7 @@ export default function SectionEditor({ sectionKey, title, children, onSave }) {
     try {
       setSaving(true);
       const payload = showJson ? JSON.parse(jsonText) : data;
-      await api.put(`/config/${sectionKey}`, { value: payload });
+      await api.put(`/admin/config/${sectionKey}`, { value: payload });
       setData(payload);
       if (onSave) onSave(payload);
       alert('Configuration saved successfully');

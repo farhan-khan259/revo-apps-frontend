@@ -31,7 +31,7 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await api.get('/admin/products');
+      const { data } = await api.get('/products');
       setProducts(data.products || []);
     } catch (err) {
       setError('Failed to load products');
@@ -60,7 +60,7 @@ export default function Products() {
       if (editing) {
         await api.put(`/admin/products/${editing}`, payload);
       } else {
-        await api.post('/admin/products', payload);
+        await api.post('/products', payload);
       }
       await fetchProducts();
       resetForm();
