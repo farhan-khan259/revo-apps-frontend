@@ -4,15 +4,16 @@ import { useTranslation } from '../i18n';
 import { BellIcon, CartIcon, HeartIcon, ListIcon, MenuIcon, SearchIcon } from './Icons';
 import { useContext } from 'react';
 import { LanguageContext, SUPPORTED_LANGS } from '../context/LanguageContext';
+import { useConfig } from '../context/ConfigContext';
 
-const navItems = [
+const defaultNavItems = [
   { key: 'nav.newArrival', target: 'new-products' },
   { key: 'nav.limitedOffers', target: 'best-deals' },
   { key: 'nav.shop', target: 'new-products' },
   { key: 'nav.reels', target: 'reels' },
 ];
 
-const categoryMenu = [
+const defaultCategories = [
   { label: 'Smartphones', target: 'new-products' },
   { label: 'Foldables', target: 'new-products' },
   { label: 'Earbuds', target: 'new-products' },
@@ -23,11 +24,20 @@ const categoryMenu = [
   { label: 'Accessories', target: 'best-deals' },
 ];
 
-function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
+function Navbar({ settings, activeSection, currentPath, onNavigate, onNavigatePath }) {
   const { t } = useTranslation();
+  const { config } = useConfig();
+  
+  const nav = config?.navigation?.links || settings?.navLinks || defaultNavItems;
+  const cats = config?.categories || settings?.categories || defaultCategories;
+  const siteSettings = config?.site || settings;
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const getNavLabel = (item) => item.name || item.label || t(item.key);
+  const getNavTarget = (item) => item.target || item.href || item.key || item.label;
+  const getNavHref = (target) => (target?.startsWith('/') ? target : `#${target}`);
 
   useEffect(() => {
     const handleEscape = (event) => {
@@ -95,14 +105,14 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
           <a
             className="brand"
             href="/"
-            aria-label="Creative Imprints home"
+            aria-label={`${siteSettings?.siteName || 'Creative Imprints'} home`}
             onClick={(event) => {
               event.preventDefault();
               handlePathNavigate('/');
             }}
           >
-            <span className="brand-mark">Creative</span>
-            <span className="brand-line">Imprints</span>
+            <span className="brand-mark">{(siteSettings?.siteName || 'Creative Imprints').split(' ')[0]}</span>
+            <span className="brand-line">{(siteSettings?.siteName || 'Creative Imprints').split(' ').slice(1).join(' ')}</span>
           </a>
 
           {/* Language toggle */}
@@ -120,7 +130,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
             <input
               type="search"
               aria-label="Search products"
-              placeholder={t('searchPlaceholder')}
+              placeholder={siteSettings?.searchPlaceholder || t('searchPlaceholder')}
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
@@ -221,7 +231,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
                     <span>Mobile focused</span>
                   </div>
                   <div className="dropdown-grid">
-                    {categoryMenu.map((item) => (
+                    {cats.map((item) => (
                       <button
                         key={item.label}
                         className="dropdown-item"
@@ -238,17 +248,27 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
             ) : null}
           </div>
           <div className="nav-links" aria-label="Section links">
-            {navItems.map((item) => (
-              <a
-                key={item.key}
-                className={activeSection === item.target ? 'active' : ''}
-                href={`#${item.target}`}
-                onClick={() => handleNavigate(item.target)}
-                aria-current={activeSection === item.target ? 'page' : undefined}
-              >
-                {t(item.key)}
-              </a>
-            ))}
+            {nav.map((item, idx) => {
+              const target = getNavTarget(item);
+              return (
+                <a
+                  key={item.key || `${item.label || item.name}-${idx}`}
+                  className={activeSection === target ? 'active' : ''}
+                  href={getNavHref(target)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    if (target?.startsWith('/')) {
+                      handlePathNavigate(target);
+                    } else {
+                      handleNavigate(target);
+                    }
+                  }}
+                  aria-current={activeSection === target ? 'page' : undefined}
+                >
+                  {getNavLabel(item)}
+                </a>
+              );
+            })}
           </div>
         </nav>
       </div>
@@ -274,18 +294,27 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
 
             <div className="drawer-group">
               <span className="drawer-label">Navigate</span>
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  className={activeSection === item.target ? 'active' : ''}
-                  href={`#${item.target}`}
-                  onClick={() => handleNavigate(item.target)}
-                >
-                  {item.label}
-                </a>
-              ))}
+                {nav.map((item, idx) => {
+                  const target = getNavTarget(item);
+                  return (
+                    <a
+                      key={item.label || item.name || `${item.key}-${idx}`}
+                      className={activeSection === target ? 'active' : ''}
+                      href={getNavHref(target)}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        if (target?.startsWith('/')) {
+                          handlePathNavigate(target);
+                        } else {
+                          handleNavigate(target);
+                        }
+                      }}
+                    >
+                      {getNavLabel(item)}
+                    </a>
+                  );
+                })}
             </div>
-
             <div className="drawer-group">
               <span className="drawer-label">Quick Links</span>
               <button className="drawer-category" type="button" onClick={() => handlePathNavigate('/wishlist/')}>
@@ -316,7 +345,7 @@ function Navbar({ activeSection, currentPath, onNavigate, onNavigatePath }) {
 
             <div className="drawer-group">
               <span className="drawer-label">Categories</span>
-              {categoryMenu.map((item) => (
+              {cats.map((item) => (
                 <button key={item.label} className="drawer-category" type="button" onClick={() => handleNavigate(item.target)}>
                   <span>{item.label}</span>
                   <small>Mobile accessory</small>

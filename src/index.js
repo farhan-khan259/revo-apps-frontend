@@ -1,13 +1,22 @@
+/* eslint-disable import/first */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import ConfigProvider from './context/ConfigContext';
+// Load admin styles only when on admin routes
+if (typeof window !== 'undefined' && window.location && window.location.pathname && window.location.pathname.startsWith('/admin')) {
+  // eslint-disable-next-line import/first
+  import('./admin.css');
+}
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider>
+      <App />
+    </ConfigProvider>
   </React.StrictMode>
 );
 

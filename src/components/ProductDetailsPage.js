@@ -5,9 +5,10 @@ import { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { formatCurrency, formatIfPrice } from '../utils/currencyFormatter';
 import { useTranslation } from '../i18n';
+import { useCart } from './CartContext';
+import { useToast } from './ToastContext';
 import { ProductCard } from './ProductsSection';
-
-
+import { useConfig } from '../context/ConfigContext';
 
 function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
   const [activeTab, setActiveTab] = useState('description');
@@ -15,6 +16,14 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
   const [quantity, setQuantity] = useState(1);
   const { lang } = useContext(LanguageContext);
   const { t } = useTranslation();
+  const { addItem } = useCart();
+  const { showToast } = useToast();
+  const { config } = useConfig();
+  
+  const ecommerceConfig = config?.ecommerce || {};
+  const addToCartText = ecommerceConfig.addToCartText || 'Add to cart';
+  const orderViaWhatsAppText = ecommerceConfig.orderViaWhatsAppText || 'Order via WhatsApp';
+  const shareText = ecommerceConfig.shareText || 'Share';
 
   useEffect(() => {
     setActiveTab('description');
@@ -97,7 +106,7 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
                 <HeartIcon />
               </button>
               <button className="product-share-button" type="button">
-                Share
+                {shareText}
               </button>
             </div>
 
@@ -132,11 +141,20 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
                 +
               </button>
 
-              <button className="product-add-button" type="button">
-                Add to cart
+              <button
+                className="product-add-button"
+                type="button"
+                onClick={() => {
+                  addItem(product, quantity);
+                  showToast(`${product.name} added to cart`, { type: 'success' });
+                  window.history.pushState({}, '', '/cart/');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                }}
+              >
+                {addToCartText}
               </button>
               <button className="product-whatsapp-button" type="button">
-                Order via WhatsApp
+                {orderViaWhatsAppText}
               </button>
             </div>
 
@@ -198,11 +216,11 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
         <section className="product-related-section">
           <div className="section-header product-related-header">
             <div>
-              <h2 className="section-title">Related Products</h2>
+              <h2 className="section-title">{ecommerceConfig.relatedProductsHeading || 'Related Products'}</h2>
             </div>
           </div>
 
-          <div className="product-related-grid">
+            <div className="product-related-grid">
             {relatedProducts.map((relatedProduct) => (
               <ProductCard key={relatedProduct.slug} product={relatedProduct} onNavigatePath={onNavigatePath} />
             ))}
@@ -217,9 +235,18 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
         <button className="product-mobile-icon" type="button" aria-label="Product details">
           <ChevronIcon />
         </button>
-        <button className="product-mobile-cart" type="button">
+        <button
+          className="product-mobile-cart"
+          type="button"
+          onClick={() => {
+            addItem(product, quantity);
+            showToast(`${product.name} added to cart`, { type: 'success' });
+            window.history.pushState({}, '', '/cart/');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+          }}
+        >
           <CartIcon />
-          Add to cart
+          {addToCartText}
         </button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import './AccountPages.css';
 import { BellIcon, CartIcon, HeartIcon, StarIcon, UserIcon } from './Icons';
+import { useConfig } from '../context/ConfigContext';
 
 const wishlistItems = [
   {
@@ -103,26 +104,35 @@ function AuthSpacer() {
 }
 
 function LoginPage({ onNavigatePath }) {
+  const { config } = useConfig();
+  const auth = config?.auth || {};
+  const title = auth.loginTitle || 'Login';
+  const usernameLabel = auth.usernameLabel || 'Username or email address';
+  const passwordLabel = auth.passwordLabel || 'Password';
+  const rememberLabel = auth.rememberLabel || 'Remember me';
+  const lostPasswordText = auth.lostPasswordText || 'Lost your password?';
+  const loginButtonText = auth.loginButton || 'Log in';
+
   return (
     <div className="account-page">
       <div className="section-shell account-shell account-auth-shell">
         <div className="account-auth-grid">
           <Panel className="account-auth-card">
-            <h2>Login</h2>
-            <Field label="Username or email address" placeholder="" autoComplete="username" />
-            <Field label="Password" type="password" placeholder="" autoComplete="current-password" />
+            <h2>{title}</h2>
+            <Field label={usernameLabel} placeholder="" autoComplete="username" />
+            <Field label={passwordLabel} type="password" placeholder="" autoComplete="current-password" />
 
             <div className="account-auth-row">
               <label className="account-check">
                 <input type="checkbox" />
-                <span>Remember me</span>
+                <span>{rememberLabel}</span>
               </label>
               <button className="account-link-button" type="button" onClick={() => navigatePath(onNavigatePath, '/my-account/lost-password/')}>
-                Lost your password?
+                {lostPasswordText}
               </button>
             </div>
 
-            <button className="account-primary-button" type="button">Log in</button>
+            <button className="account-primary-button" type="button">{loginButtonText}</button>
           </Panel>
 
           <AuthSpacer />
@@ -133,6 +143,11 @@ function LoginPage({ onNavigatePath }) {
 }
 
 function ResetPasswordPage({ onNavigatePath }) {
+  const { config } = useConfig();
+  const auth = config?.auth || {};
+  const resetTitle = auth.resetTitle || 'Reset password';
+  const resetButton = auth.resetButton || 'Reset password';
+
   return (
     <div className="account-page">
       <div className="section-shell account-shell account-auth-shell">
@@ -143,7 +158,7 @@ function ResetPasswordPage({ onNavigatePath }) {
               password via email.
             </p>
             <Field label="Username or email" placeholder="" autoComplete="username" />
-            <button className="account-primary-button account-primary-button--reset" type="button">Reset password</button>
+            <button className="account-primary-button account-primary-button--reset" type="button">{resetButton}</button>
             <button className="account-text-link" type="button" onClick={() => navigatePath(onNavigatePath, '/my-account/')}>Back to login</button>
           </Panel>
 
@@ -155,13 +170,21 @@ function ResetPasswordPage({ onNavigatePath }) {
 }
 
 function RegisterPage({ onNavigatePath }) {
+  const { config } = useConfig();
+  const auth = config?.auth || {};
+  const createKicker = auth.registerKicker || 'Create account';
+  const registerTitle = auth.registerTitle || 'Register';
+  const registerSubtitle = auth.registerSubtitle || 'Set up your Creative Imprints profile to track orders, save accessories, and get mobile-only offers.';
+  const createAccountText = auth.createAccountButton || 'Create account';
+  const alreadyHaveAccountText = auth.alreadyHaveAccount || 'Already have an account?';
+
   return (
     <div className="account-page">
       <div className="section-shell account-shell account-auth-shell">
         <AccountHero
-          kicker="Create account"
-          title="Register"
-          subtitle="Set up your Creative Imprints profile to track orders, save accessories, and get mobile-only offers."
+          kicker={createKicker}
+          title={registerTitle}
+          subtitle={registerSubtitle}
           onNavigatePath={onNavigatePath}
         />
 
@@ -180,7 +203,7 @@ function RegisterPage({ onNavigatePath }) {
               </span>
             </label>
 
-            <button className="account-primary-button" type="button">Create account</button>
+            <button className="account-primary-button" type="button">{createAccountText}</button>
           </Panel>
 
           <Panel className="account-info-card">
@@ -191,7 +214,7 @@ function RegisterPage({ onNavigatePath }) {
               <li>Track orders, shipping updates, and notifications in one place.</li>
               <li>Unlock app-only deals and faster checkout on mobile.</li>
             </ul>
-            <button className="account-secondary-button" type="button" onClick={() => navigatePath(onNavigatePath, '/my-account/')}>Already have an account?</button>
+            <button className="account-secondary-button" type="button" onClick={() => navigatePath(onNavigatePath, '/my-account/')}>{alreadyHaveAccountText}</button>
           </Panel>
         </div>
       </div>
@@ -200,6 +223,10 @@ function RegisterPage({ onNavigatePath }) {
 }
 
 function CartPage({ onNavigatePath }) {
+  const { config } = useConfig();
+  const cartCfg = config?.cartSettings || {};
+  const proceedText = cartCfg.proceedToCheckoutText || 'Proceed to checkout';
+
   return (
     <div className="account-page">
       <div className="section-shell account-shell">
@@ -242,7 +269,7 @@ function CartPage({ onNavigatePath }) {
             <div className="account-summary-row"><span>Shipping</span><strong>Free</strong></div>
             <div className="account-summary-row"><span>Discount</span><strong>-$40</strong></div>
             <div className="account-summary-total"><span>Total</span><strong>$1,287</strong></div>
-            <button className="account-primary-button" type="button">Proceed to checkout</button>
+            <button className="account-primary-button" type="button">{proceedText}</button>
           </Panel>
         </div>
       </div>
@@ -251,13 +278,20 @@ function CartPage({ onNavigatePath }) {
 }
 
 function WishlistPage({ onNavigatePath }) {
+  const { config } = useConfig();
+  const wishlistCfg = config?.wishlist || {};
+  const wishlistKicker = wishlistCfg.kicker || 'Saved products';
+  const wishlistTitle = wishlistCfg.title || 'Wishlist';
+  const wishlistSubtitle = wishlistCfg.subtitle || 'Your favorite phones and accessories are ready whenever you want them.';
+  const moveToCartText = wishlistCfg.moveToCartText || 'Move to cart';
+
   return (
     <div className="account-page">
       <div className="section-shell account-shell">
         <AccountHero
-          kicker="Saved products"
-          title="Wishlist"
-          subtitle="Your favorite phones and accessories are ready whenever you want them."
+          kicker={wishlistKicker}
+          title={wishlistTitle}
+          subtitle={wishlistSubtitle}
           onNavigatePath={onNavigatePath}
         />
 
@@ -283,7 +317,7 @@ function WishlistPage({ onNavigatePath }) {
                     <strong>{item.price}</strong>
                     <span>{item.oldPrice}</span>
                   </div>
-                  <button className="account-secondary-button" type="button">Move to cart</button>
+                  <button className="account-secondary-button" type="button">{moveToCartText}</button>
                 </div>
               </article>
             ))}
@@ -295,6 +329,8 @@ function WishlistPage({ onNavigatePath }) {
 }
 
 function OrdersPage({ onNavigatePath }) {
+  const { config } = useConfig();
+  const ordersCfg = config?.orderWorkflow || {};
   return (
     <div className="account-page">
       <div className="section-shell account-shell">
@@ -323,7 +359,7 @@ function OrdersPage({ onNavigatePath }) {
                     <strong>{order.total}</strong>
                     <span>{order.date}</span>
                   </div>
-                  <span className={`account-status account-status--${order.status.toLowerCase()}`}>{order.status}</span>
+                  <span className={`account-status account-status--${order.status.toLowerCase()}`}>{ordersCfg.statusMessages ? (ordersCfg.statusMessages[order.status] || order.status) : order.status}</span>
                 </div>
               ))}
             </div>

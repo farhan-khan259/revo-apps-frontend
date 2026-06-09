@@ -327,6 +327,12 @@
   background: #fff;
 }
 
+.product-add-button:hover,
+.product-add-button:active {
+  border-color: #b91c1c; /* dark red */
+  color: #b91c1c;
+}
+
 .product-whatsapp-button {
   min-width: 220px;
   background: #179d29;
@@ -533,6 +539,11 @@
   font-weight: 700;
   font-size: 14px;
   padding: 0 14px;
+}
+
+.product-mobile-cart:hover,
+.product-mobile-cart:active {
+  background: #b91c1c;
 }
 
 .product-mobile-cart svg {

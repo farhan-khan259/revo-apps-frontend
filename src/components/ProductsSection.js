@@ -5,10 +5,18 @@ import { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { formatCurrency } from '../utils/currencyFormatter';
 import { useTranslation } from '../i18n';
+import { useToast } from './ToastContext';
+import { useCart } from './CartContext';
+import { useConfig } from '../context/ConfigContext';
 
 export function ProductCard({ product, onNavigatePath }) {
   const { lang } = useContext(LanguageContext);
   const productPath = getProductPath(product);
+  const { addItem } = useCart();
+  const { showToast } = useToast();
+  const { config } = useConfig();
+  
+  const addToCartText = config?.ecommerce?.addToCartText || 'Add to cart';
 
   const handleCardClick = (event) => {
     if (!onNavigatePath) {
@@ -44,7 +52,18 @@ export function ProductCard({ product, onNavigatePath }) {
             {product.rating}
           </span>
           <span className="sold">{product.sold}</span>
-          <button className="cart-button" type="button" aria-label={`Add ${product.name} to cart`}>
+          <button
+            className="cart-button"
+            type="button"
+            aria-label={`${addToCartText} ${product.name}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              addItem(product, 1);
+              showToast(`${product.name} added to cart`, { type: 'success' });
+              window.history.pushState({}, '', '/cart/');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
+          >
             <CartIcon />
           </button>
         </div>
@@ -55,20 +74,28 @@ export function ProductCard({ product, onNavigatePath }) {
 
 function ProductsSection({ id, title, subtitle, chips, products, onNavigatePath }) {
   const { t } = useTranslation();
+  const { config } = useConfig();
+  const homepageCfg = config?.homepage || {};
+  const sectionCfg = (id && homepageCfg[id]) || {};
+  const finalTitle = title || sectionCfg.title || '';
+  const finalSubtitle = subtitle || sectionCfg.subtitle || '';
+  const finalChips = (chips && chips.length) ? chips : (sectionCfg.chips || []);
+  const viewAllText = config?.ecommerce?.viewAllText || t('viewAll');
+  
   return (
     <section className="products-shell section-shell" id={id}>
       <div className="section-header">
         <div>
-          <h2 className="section-title">{title}</h2>
-          <p className="section-subtitle">{subtitle}</p>
+          <h2 className="section-title">{finalTitle}</h2>
+          <p className="section-subtitle">{finalSubtitle}</p>
         </div>
         <a className="section-link" href="#top">
-          {t('viewAll')}
+          {viewAllText}
         </a>
       </div>
 
-      <div className="chip-row" aria-label={`${title} filters`}>
-        {chips.map((chip, index) => (
+      <div className="chip-row" aria-label={`${finalTitle} filters`}>
+        {finalChips.map((chip, index) => (
           <button key={chip} className={`chip ${index === 0 ? 'is-active' : ''}`} type="button">
             {chip}
           </button>

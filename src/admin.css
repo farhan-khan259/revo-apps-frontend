@@ -1,0 +1,15 @@
+/* Admin global styles: media grid, modals, drag-drop, color picker, JSON editor highlight */
+.admin-shell { font-family: var(--font-family, Inter, system-ui, sans-serif); }
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 12px; }
+.media-item { border: 1px solid #eee; padding: 8px; border-radius: 6px; background: #fff; }
+.image-picker-modal { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.4); }
+.image-picker-modal .modal-content { background:#fff; padding:16px; border-radius:8px; width:90%; max-width:900px; }
+.drag-list { list-style:none; padding:0; margin:0; }
+.drag-item { padding:8px; border:1px dashed #ddd; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.color-picker { display:flex; gap:8px; align-items:center; }
+.color-swatch { width:28px; height:28px; border-radius:4px; border:1px solid #ccc; }
+.json-editor { background:#0b0c0e; color:#e6edf3; padding:12px; border-radius:6px; font-family: monospace; font-size:13px; }
+.json-key { color:#9cdcfe; }
+.json-string { color:#ce9178; }
+.json-number { color:#b5cea8; }
+.admin-preview-button { background:transparent; border:1px solid var(--color-primary,#1976d2); padding:6px 10px; border-radius:4px; color:var(--color-primary,#1976d2); cursor:pointer; }
