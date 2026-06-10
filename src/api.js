@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const HOST = process.env.REACT_APP_API_URL || 'https://revoapps-backend.onrender.com';
+const DEFAULT_API_URL = 'https://revoapps-backend.onrender.com';
+const isLocalhost = typeof window !== 'undefined' && /(localhost|127\.0\.0\.1)/.test(window.location.hostname);
+const envApiUrl = process.env.REACT_APP_API_URL;
+const HOST = isLocalhost
+  ? envApiUrl || 'http://localhost:4000'
+  : envApiUrl?.includes('localhost')
+    ? DEFAULT_API_URL
+    : envApiUrl || DEFAULT_API_URL;
 const API_BASE = HOST.replace(/\/$/, '') + '/api';
 
 const api = axios.create({
