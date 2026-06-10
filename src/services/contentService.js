@@ -1,7 +1,7 @@
 import { heroSlides, categories, reels, newProducts, bestDeals, promoTiles, accessoryTiles } from '../data';
 import { fetchProductsByIds } from './productService';
 
-const API_BASE = process.env.REACT_APP_API_URL || '';
+const API_BASE = process.env.REACT_APP_API_URL || 'https://revoapps-backend.onrender.com';
 
 const fetchAllCategories = async () => {
   try {

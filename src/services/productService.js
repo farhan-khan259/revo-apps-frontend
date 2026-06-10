@@ -1,6 +1,6 @@
 import { allProducts } from '../productCatalog';
 
-const API_BASE = process.env.REACT_APP_API_URL || '';
+const API_BASE = process.env.REACT_APP_API_URL || 'https://revoapps-backend.onrender.com';
 
 const normalizeProduct = (product) => ({
   ...product,
