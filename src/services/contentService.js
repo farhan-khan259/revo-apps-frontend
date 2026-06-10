@@ -5,7 +5,7 @@ const DEFAULT_API_URL = 'https://revoapps-backend.onrender.com';
 const isLocalhost = typeof window !== 'undefined' && /(localhost|127\.0\.0\.1)/.test(window.location.hostname);
 const envApiUrl = process.env.REACT_APP_API_URL;
 export const API_BASE = isLocalhost
-  ? envApiUrl || 'http://localhost:4000'
+  ? envApiUrl || 'https://revoapps-backend.onrender.com'
   : envApiUrl?.includes('localhost')
     ? DEFAULT_API_URL
     : envApiUrl || DEFAULT_API_URL;
