@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Serve existing files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Admin SPA fallback (if you built an admin app under /admin)
+  RewriteRule ^admin(?:/.*)?$ /admin/index.html [L]
+
+  # General SPA fallback — send everything else to index.html
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+# Optional: prevent directory listing
+Options -Indexes
