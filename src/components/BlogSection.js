@@ -17,7 +17,7 @@ function BlogSection({ id, posts }) {
             <div className="blog-copy">
               <h3>{post.title}</h3>
               <p>{post.text}</p>
-              <a href="#top">Continue reading</a>
+              <a href="#/top">Continue reading</a>
             </div>
           </article>
         ))}

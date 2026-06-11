@@ -5,6 +5,19 @@ function Footer({ id, settings }) {
   const { t } = useTranslation();
   const siteSettings = settings;
 
+  const normalizedFooterHref = (href) => {
+    if (!href) {
+      return '#/';
+    }
+    if (href.startsWith('/')) {
+      return `#${href}`;
+    }
+    if (href.startsWith('#')) {
+      return `#/${href.replace(/^#\/?/, '')}`;
+    }
+    return href;
+  };
+
   const defaultColumns = [
     { title: t('footer.companyInfo'), links: [t('footer.about'), t('footer.contact'), t('footer.careers'), t('footer.press')] },
     { title: t('footer.customerService'), links: [t('footer.howToOrder'), t('footer.returns'), t('footer.shipping'), t('footer.delivery')] },
@@ -15,7 +28,7 @@ function Footer({ id, settings }) {
     <footer className="footer-wrap" id={id}>
       <div className="footer-shell section-shell">
         <div className="footer-brand">
-          <a className="brand footer-brand-logo" href="/" aria-label={siteSettings?.siteName || 'Creative Imprints'}>
+          <a className="brand footer-brand-logo" href="#/" aria-label={siteSettings?.siteName || 'Creative Imprints'}>
             <span className="brand-mark">{(siteSettings?.siteName || 'Creative Imprints').split(' ')[0]}</span>
             <span className="brand-line">{(siteSettings?.siteName || 'Creative Imprints').split(' ').slice(1).join(' ')}</span>
           </a>
@@ -29,13 +42,13 @@ function Footer({ id, settings }) {
               {(col.links || []).map((l, index) => {
                 if (typeof l === 'string') {
                   return (
-                    <a key={`${col.title}-${index}`} href="#top">
+                    <a key={`${col.title}-${index}`} href="#/top">
                       {l}
                     </a>
                   );
                 }
                 return (
-                  <a key={`${col.title}-${index}`} href={l.href || '#top'}>
+                  <a key={`${col.title}-${index}`} href={normalizedFooterHref(l.href)}>
                     {l.label || l.title || l.href}
                   </a>
                 );

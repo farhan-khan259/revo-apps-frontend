@@ -147,7 +147,7 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
                 onClick={() => {
                   addItem(product, quantity);
                   showToast(`${product.name} added to cart`, { type: 'success' });
-                  window.history.pushState({}, '', '/cart/');
+                  window.history.pushState({}, '', '#/cart/');
                   window.dispatchEvent(new PopStateEvent('popstate'));
                 }}
               >
@@ -241,7 +241,7 @@ function ProductDetailsPage({ product, relatedProducts, onNavigatePath }) {
           onClick={() => {
             addItem(product, quantity);
             showToast(`${product.name} added to cart`, { type: 'success' });
-            window.history.pushState({}, '', '/cart/');
+            window.history.pushState({}, '', '#/cart/');
             window.dispatchEvent(new PopStateEvent('popstate'));
           }}
         >

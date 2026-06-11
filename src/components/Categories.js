@@ -8,7 +8,7 @@ function Categories({ items, onNavigate }) {
       <div className="category-row-wrapper">
         <div className="categories-row" id="categories-row" aria-label="Mobile categories">
           {items.map((item) => (
-            <a className="category-card" key={item.name} href="#new-products" onClick={() => onNavigate('new-products')}>
+            <a className="category-card" key={item.name} href="#/new-products" onClick={() => onNavigate('new-products')}>
               <div className="category-thumb">
                 <img src={item.image} alt={item.name} />
               </div>

@@ -1,6 +1,6 @@
 
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
@@ -76,10 +76,28 @@ const normalizePath = (pathname) => {
   return pathname.endsWith('/') ? pathname : `${pathname}/`;
 };
 
-const getRouteFromLocation = () => {
-  const pathname = normalizePath(window.location.pathname);
+const getHashPathname = () => {
+  if (typeof window === 'undefined' || !window.location) {
+    return '/';
+  }
 
-  if (pathname.startsWith(PRODUCT_PATH_PREFIX)) {
+  let hash = window.location.hash || '';
+  hash = hash.startsWith('#') ? hash.slice(1) : hash;
+  if (!hash) {
+    return '/';
+  }
+
+  if (!hash.startsWith('/')) {
+    hash = `/${hash}`;
+  }
+
+  return normalizePath(hash.split('?')[0].split('#')[0]);
+};
+
+const getRouteFromLocation = (pathname = getHashPathname()) => {
+  const normalizedPath = normalizePath(pathname);
+
+  if (normalizedPath.startsWith(PRODUCT_PATH_PREFIX)) {
     const productSlug = pathname.slice(PRODUCT_PATH_PREFIX.length).replace(/\/$/, '');
     if (productSlug) {
       return { kind: 'product', productSlug };
@@ -147,30 +165,36 @@ function FrontendApp() {
 
     loadSite();
 
-    const syncActiveSection = () => {
-      const hash = window.location.hash.replace('#', '');
-      setActiveSection(hash || 'top');
-      setRouteState(getRouteFromLocation());
+    const syncRouteState = () => {
+      const pathname = getHashPathname();
+      const route = getRouteFromLocation(pathname);
+      setRouteState(route);
+
+      if (route.kind === 'home') {
+        const section = pathname === '/' ? 'top' : pathname.replace(/\/$/, '').replace(/^\//, '');
+        setActiveSection(section || 'top');
+      } else {
+        setActiveSection('top');
+      }
     };
 
-    syncActiveSection();
-    window.addEventListener('hashchange', syncActiveSection);
-    window.addEventListener('popstate', syncActiveSection);
+    syncRouteState();
+    window.addEventListener('hashchange', syncRouteState);
+    window.addEventListener('popstate', syncRouteState);
 
     return () => {
-      window.removeEventListener('hashchange', syncActiveSection);
-      window.removeEventListener('popstate', syncActiveSection);
+      window.removeEventListener('hashchange', syncRouteState);
+      window.removeEventListener('popstate', syncRouteState);
     };
   }, []);
 
   const handleNavigate = (sectionId) => {
-    setActiveSection(sectionId);
-    if (normalizePath(window.location.pathname) !== '/' || window.location.hash.replace('#', '') !== sectionId) {
-      window.history.pushState({}, '', `/#${sectionId}`);
-      setRouteState({ kind: 'home' });
-    } else if (window.location.hash.replace('#', '') !== sectionId) {
-      window.location.hash = sectionId;
+    const hashPath = sectionId === 'top' ? '#/' : `#/${sectionId}`;
+    if (window.location.hash !== hashPath) {
+      window.history.pushState({}, '', hashPath);
     }
+    setActiveSection(sectionId);
+    setRouteState({ kind: 'home' });
 
     setTimeout(() => {
       const element = document.getElementById(sectionId);
@@ -184,19 +208,17 @@ function FrontendApp() {
 
   const handleNavigatePath = (path) => {
     const normalizedPath = normalizePath(path);
+    const hashPath = `#${normalizedPath}`;
 
-    if (normalizePath(window.location.pathname) !== normalizedPath) {
-      window.history.pushState({}, '', normalizedPath);
-    }
-
-    if (normalizedPath === '/') {
-      window.location.hash = '';
+    if (window.location.hash !== hashPath) {
+      window.history.pushState({}, '', hashPath);
     }
 
     setActiveSection('top');
-    setRouteState(getRouteFromLocation());
+    setRouteState(getRouteFromLocation(normalizedPath));
   };
 
+  const currentHashPath = getHashPathname();
   const isHomeRoute = routeState.kind === 'home';
   const isCheckoutRoute = routeState.kind === 'checkout';
   const currentProduct = routeState.kind === 'product' ? products.find((p) => p.slug === routeState.productSlug) : null;
@@ -209,7 +231,7 @@ function FrontendApp() {
       <Navbar
         settings={siteSettings}
         activeSection={isHomeRoute ? activeSection : ''}
-        currentPath={normalizePath(window.location.pathname)}
+        currentPath={currentHashPath}
         onNavigate={handleNavigate}
         onNavigatePath={handleNavigatePath}
       />
@@ -276,7 +298,7 @@ function AdminFallback({ title }) {
 function App() {
   return (
     <ConfigProvider>
-      <BrowserRouter>
+      <HashRouter>
         <LanguageProvider>
           <ToastProvider>
             <CartProvider>
@@ -321,7 +343,7 @@ function App() {
           </CartProvider>
         </ToastProvider>
       </LanguageProvider>
-      </BrowserRouter>
+      </HashRouter>
     </ConfigProvider>
   );
 }

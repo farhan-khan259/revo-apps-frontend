@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import api from '../../api';
 import PreviewButton from './PreviewButton';
 
@@ -11,11 +11,7 @@ export default function SectionEditor({ sectionKey, title, children, onSave }) {
   const [jsonText, setJsonText] = useState('');
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    loadData();
-  }, [sectionKey]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       const { data: config } = await api.get('/admin/config/all');
@@ -28,7 +24,11 @@ export default function SectionEditor({ sectionKey, title, children, onSave }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [sectionKey]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const handleSave = async () => {
     try {

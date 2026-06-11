@@ -29,10 +29,12 @@ export async function deleteImage(imageId) {
   return data;
 }
 
-export default {
+const configService = {
   fetchAllConfig,
   saveConfig,
   uploadImage,
   deleteImage,
 };
+
+export default configService;
 

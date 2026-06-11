@@ -37,7 +37,7 @@ function Navbar({ settings, activeSection, currentPath, onNavigate, onNavigatePa
 
   const getNavLabel = (item) => item.name || item.label || t(item.key);
   const getNavTarget = (item) => item.target || item.href || item.key || item.label;
-  const getNavHref = (target) => (target?.startsWith('/') ? target : `#${target}`);
+  const getNavHref = (target) => (target?.startsWith('/') ? `#${target}` : `#/${target}`);
 
   useEffect(() => {
     const handleEscape = (event) => {
@@ -104,7 +104,7 @@ function Navbar({ settings, activeSection, currentPath, onNavigate, onNavigatePa
         <div className="navbar-top">
           <a
             className="brand"
-            href="/"
+            href="#/"
             aria-label={`${siteSettings?.siteName || 'Creative Imprints'} home`}
             onClick={(event) => {
               event.preventDefault();
@@ -154,7 +154,7 @@ function Navbar({ settings, activeSection, currentPath, onNavigate, onNavigatePa
             </button>
             <a
               className="nav-button ghost desktop-only"
-              href="/my-account/"
+              href="#/my-account/"
               onClick={(event) => {
                 event.preventDefault();
                 handlePathNavigate('/my-account/');
@@ -164,7 +164,7 @@ function Navbar({ settings, activeSection, currentPath, onNavigate, onNavigatePa
             </a>
             <a
               className="nav-button solid desktop-only"
-              href="/my-account/register/"
+              href="#/my-account/register/"
               onClick={(event) => {
                 event.preventDefault();
                 handlePathNavigate('/my-account/register/');
@@ -188,7 +188,7 @@ function Navbar({ settings, activeSection, currentPath, onNavigate, onNavigatePa
         <div className="navbar-mobile-brand" aria-hidden="true">
           <a
             className="mobile-brand-mark"
-            href="/"
+            href="#/"
             onClick={(event) => {
               event.preventDefault();
               handlePathNavigate('/');

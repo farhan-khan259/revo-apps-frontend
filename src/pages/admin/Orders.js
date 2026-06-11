@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import api from '../../api';
 
 export default function Orders() {
@@ -12,15 +12,7 @@ export default function Orders() {
   const [error, setError] = useState('');
   const [updating, setUpdating] = useState(null);
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  useEffect(() => {
-    applyFilters();
-  }, [orders, filterStatus, startDate, endDate]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       const { data } = await api.get('/orders');
       setOrders(data.orders || []);
@@ -28,9 +20,9 @@ export default function Orders() {
       setError('Failed to load orders');
       console.error(err);
     }
-  };
+  }, []);
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let filtered = orders;
 
     if (filterStatus !== 'all') {
@@ -48,7 +40,15 @@ export default function Orders() {
     }
 
     setFilteredOrders(filtered);
-  };
+  }, [orders, filterStatus, startDate, endDate]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {

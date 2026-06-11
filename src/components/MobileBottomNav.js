@@ -41,7 +41,7 @@ function MobileBottomNav({ activeSection, onNavigate, onNavigatePath }) {
           <a
             key={key}
             className={`mobile-bottom-tab ${isActive ? 'active' : ''}`}
-            href={`#${target}`}
+            href={`#/${target}`}
             onClick={(e) => handleTabClick(e, key, target)}
             aria-current={isActive ? 'page' : undefined}
           >

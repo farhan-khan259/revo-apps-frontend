@@ -5,9 +5,12 @@ import './index.css';
 import App from './App';
 import ConfigProvider from './context/ConfigContext';
 // Load admin styles only when on admin routes
-if (typeof window !== 'undefined' && window.location && window.location.pathname && window.location.pathname.startsWith('/admin')) {
-  // eslint-disable-next-line import/first
-  import('./admin.css');
+if (typeof window !== 'undefined' && window.location) {
+  const isAdminRoute = window.location.pathname?.startsWith('/admin') || window.location.hash?.startsWith('#/admin');
+  if (isAdminRoute) {
+    // eslint-disable-next-line import/first
+    import('./admin.css');
+  }
 }
 import reportWebVitals from './reportWebVitals';
 

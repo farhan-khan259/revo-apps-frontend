@@ -29,7 +29,7 @@ export function ProductCard({ product, onNavigatePath }) {
 
   return (
     <article className="product-card">
-      <a className="product-card-link" href={productPath} onClick={handleCardClick} aria-label={`Open ${product.name}`}>
+      <a className="product-card-link" href={`#${productPath}`} onClick={handleCardClick} aria-label={`Open ${product.name}`}>
         <span className="sr-only">Open {product.name}</span>
       </a>
       <button className="wishlist-button" type="button" aria-label={`Save ${product.name}`}>
@@ -60,7 +60,7 @@ export function ProductCard({ product, onNavigatePath }) {
               e.stopPropagation();
               addItem(product, 1);
               showToast(`${product.name} added to cart`, { type: 'success' });
-              window.history.pushState({}, '', '/cart/');
+              window.history.pushState({}, '', '#/cart/');
               window.dispatchEvent(new PopStateEvent('popstate'));
             }}
           >
@@ -89,7 +89,7 @@ function ProductsSection({ id, title, subtitle, chips, products, onNavigatePath 
           <h2 className="section-title">{finalTitle}</h2>
           <p className="section-subtitle">{finalSubtitle}</p>
         </div>
-        <a className="section-link" href="#top">
+        <a className="section-link" href="#/top">
           {viewAllText}
         </a>
       </div>

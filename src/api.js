@@ -1,13 +1,9 @@
 import axios from 'axios';
 
-const DEFAULT_API_URL = 'https://revoapps-backend.onrender.com';
 const isLocalhost = typeof window !== 'undefined' && /(localhost|127\.0\.0\.1)/.test(window.location.hostname);
-const envApiUrl = process.env.REACT_APP_API_URL;
-const HOST = isLocalhost
-  ? envApiUrl || 'https://revoapps-backend.onrender.com'
-  : envApiUrl?.includes('localhost')
-    ? DEFAULT_API_URL
-    : envApiUrl || DEFAULT_API_URL;
+const envApiUrl = process.env.REACT_APP_API_URL?.trim();
+const fallbackApiUrl = isLocalhost ? 'http://localhost:4000' : window.location.origin;
+const HOST = envApiUrl || fallbackApiUrl;
 const API_BASE = HOST.replace(/\/$/, '') + '/api';
 
 const api = axios.create({
@@ -28,7 +24,7 @@ api.interceptors.response.use(
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       if (typeof window !== 'undefined') {
-        window.location.href = '/admin/login';
+        window.location.href = '#/admin/login';
       }
     }
     return Promise.reject(error);

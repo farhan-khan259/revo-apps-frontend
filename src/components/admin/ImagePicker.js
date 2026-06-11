@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import api from '../../api';
 
 export default function ImagePicker({ onSelect, isOpen, onClose }) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [upload, setUpload] = useState(null);
 
-  const loadImages = async () => {
+  const loadImages = useCallback(async () => {
     if (isOpen && images.length === 0) {
       try {
         setLoading(true);
@@ -18,7 +17,7 @@ export default function ImagePicker({ onSelect, isOpen, onClose }) {
         setLoading(false);
       }
     }
-  };
+  }, [isOpen, images.length]);
 
   const handleUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -32,11 +31,16 @@ export default function ImagePicker({ onSelect, isOpen, onClose }) {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setImages([...images, data]);
-      setUpload(null);
     } catch (err) {
       console.error('Upload failed:', err);
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      loadImages();
+    }
+  }, [isOpen, loadImages]);
 
   const handleDelete = async (id) => {
     if (window.confirm('Delete image?')) {

@@ -31,7 +31,7 @@ function EmptyCart({ onShop, emptyCartMessage, shopNowText }) {
 }
 
 function CartPage({ onNavigatePath }) {
-  const { cartItems, updateQuantity, removeItem, subtotal, total, shippingCost, applyCoupon, couponCode, setCouponCode, couponError, couponSuccess } = useCart();
+  const { cartItems, updateQuantity, removeItem, subtotal, total, shippingCost, applyCoupon, couponCode, couponError, couponSuccess } = useCart();
   const { config } = useConfig();
   const [localCoupon, setLocalCoupon] = useState('');
   
@@ -39,7 +39,6 @@ function CartPage({ onNavigatePath }) {
   const emptyCartMessage = cartSettings.emptyCartMessage || 'Checkout is not available while your cart is empty. Please take a look through our store and come back when you\'re ready to place an order.';
   const couponPlaceholder = cartSettings.couponPlaceholder || 'Enter coupon code';
   const shopNowText = cartSettings.shopNowText || 'Shop Now';
-  const proceedToCheckoutText = cartSettings.proceedToCheckoutText || 'Proceed to checkout';
 
   const handleApplyCoupon = () => {
     applyCoupon(localCoupon);
@@ -160,7 +159,7 @@ function CartPage({ onNavigatePath }) {
 }
 
 function CheckoutPage({ onNavigatePath }) {
-  const { cartItems, total, subtotal, shippingCost, shippingMethod, setShippingMethod, paymentMethod, setPaymentMethod, applyCoupon, couponCode, setCouponCode, couponError, couponSuccess, clearCart } = useCart();
+  const { cartItems, total, subtotal, shippingCost, shippingMethod, setShippingMethod, paymentMethod, setPaymentMethod, applyCoupon, couponCode, couponError, couponSuccess, clearCart } = useCart();
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',

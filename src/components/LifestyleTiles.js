@@ -12,7 +12,7 @@ function LifestyleTiles({ banners, tiles }) {
 
       <div className="lifestyle-banner-grid">
         {banners.map((item) => (
-          <a className="lifestyle-banner" key={item.title} href="#best-deals">
+          <a className="lifestyle-banner" key={item.title} href="#/best-deals">
             <img src={item.image} alt={item.title} />
             <div className="lifestyle-banner-copy">
               <span>{item.subtitle}</span>
@@ -24,7 +24,7 @@ function LifestyleTiles({ banners, tiles }) {
 
       <div className="lifestyle-grid">
         {tiles.map((item) => (
-          <a className="lifestyle-card" key={item.title} href="#best-deals">
+          <a className="lifestyle-card" key={item.title} href="#/best-deals">
             <img src={item.image} alt={item.title} />
             <div className="lifestyle-overlay">{item.title}</div>
           </a>

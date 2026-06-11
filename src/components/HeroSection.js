@@ -48,6 +48,19 @@ function HeroSection({ stats, slides, onNavigate }) {
           },
         ].filter(Boolean)
     : [];
+  const normalizeHeroHref = (href) => {
+    if (!href) {
+      return '#/';
+    }
+    if (href.startsWith('/')) {
+      return `#${href}`;
+    }
+    if (href.startsWith('#')) {
+      return `#/${href.replace(/^#\/?/, '')}`;
+    }
+    return href;
+  };
+
   const statsToShow = useFallbackSlides ? (heroConfig.stats || stats || []) : (stats || []);
 
   return (
@@ -62,11 +75,11 @@ function HeroSection({ stats, slides, onNavigate }) {
                 <a
                   key={idx}
                   className={`hero-cta ${btn.variant === 'primary' ? 'primary' : 'ghost'}`}
-                  href={btn.href || '#'}
+                  href={normalizeHeroHref(btn.href)}
                   onClick={(e) => {
                     if (btn.href && btn.href.startsWith('/')) {
                       e.preventDefault();
-                      window.history.pushState({}, '', btn.href);
+                      window.history.pushState({}, '', `#${btn.href}`);
                       window.dispatchEvent(new PopStateEvent('popstate'));
                     }
                   }}

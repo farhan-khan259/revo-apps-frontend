@@ -145,7 +145,6 @@ function LoginPage({ onNavigatePath }) {
 function ResetPasswordPage({ onNavigatePath }) {
   const { config } = useConfig();
   const auth = config?.auth || {};
-  const resetTitle = auth.resetTitle || 'Reset password';
   const resetButton = auth.resetButton || 'Reset password';
 
   return (

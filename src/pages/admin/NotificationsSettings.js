@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import SectionEditor from '../../components/admin/SectionEditor';
 
 function NotificationsSettingsForm({ data, setData }) {
